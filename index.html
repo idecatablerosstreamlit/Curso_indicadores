@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso de indicadores — IDECA</title>
+<style>
+:root {
+  --navy: #0E2841;
+  --yel:  #FFB001;
+  --red:  #CC1724;
+  --gold: #FDC23D;
+  --light: #F5F7FA;
+  --gray: #64748B;
+  --text: #1E293B;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ENCABEZADO */
+header {
+  background: var(--navy);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.hdr-top {
+  border-bottom: 4px solid var(--yel);
+  padding: 36px 60px 32px;
+  position: relative;
+  z-index: 1;
+}
+.hdr-top::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 320px; height: 100%;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,176,1,.07) 40%);
+  pointer-events: none;
+}
+.hdr-sup {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--yel);
+  margin-bottom: 10px;
+  opacity: .85;
+}
+header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  max-width: 700px;
+  margin-bottom: 10px;
+}
+.hdr-meta {
+  font-size: 12px;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .3px;
+}
+.hdr-meta span {
+  margin-right: 16px;
+}
+.hdr-meta span::before {
+  content: '· ';
+  color: var(--yel);
+}
+.hdr-meta span:first-child::before { content: ''; }
+
+/* NAV PILLS */
+.hdr-nav {
+  background: rgba(0,0,0,.18);
+  padding: 0 60px;
+  display: flex;
+  gap: 2px;
+}
+.hdr-nav a {
+  color: rgba(255,255,255,.55);
+  text-decoration: none;
+  font-size: 11.5px;
+  padding: 11px 16px;
+  border-bottom: 3px solid transparent;
+  transition: all .15s;
+  display: inline-block;
+}
+.hdr-nav a:hover { color: #fff; border-color: var(--yel); }
+
+/* MAIN */
+main { max-width: 1040px; margin: 0 auto; padding: 44px 24px 60px; }
+
+/* OBJETIVOS */
+.obj-section { margin-bottom: 42px; }
+.sec-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--yel);
+}
+.obj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.obj-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 22px 24px;
+  border-top: 4px solid var(--navy);
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+}
+.obj-card.yel { border-top-color: var(--yel); }
+.obj-card h3 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gray);
+  margin-bottom: 11px;
+}
+.obj-card p {
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.obj-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  grid-column: 1 / -1;
+}
+.obj-list li {
+  font-size: 13px;
+  color: var(--text);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+.obj-list li::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--yel);
+  border: 1.5px solid var(--navy);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* SESIONES */
+.ses-section { }
+.ses-grid { display: flex; flex-direction: column; gap: 14px; }
+.ses-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,.07);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  align-items: stretch;
+}
+.ses-card.pending { opacity: .6; }
+.ses-num {
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  padding: 20px 10px;
+}
+.ses-num .n {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--yel);
+}
+.ses-num .lbl {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,.5);
+  margin-top: 3px;
+}
+.ses-body {
+  padding: 18px 22px 16px;
+  border-right: 1px solid #EEF2F8;
+}
+.ses-body h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.ses-body .ses-sub {
+  font-size: 11px;
+  color: var(--red);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 9px;
+}
+.ses-body p {
+  font-size: 12.5px;
+  color: var(--gray);
+  line-height: 1.55;
+}
+.ses-body .topics {
+  margin-top: 9px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.topic-tag {
+  background: var(--light);
+  color: var(--navy);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid #DDE4EE;
+}
+.ses-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 20px;
+  min-width: 190px;
+}
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .15s;
+  justify-content: center;
+}
+.btn-navy {
+  background: var(--navy);
+  color: #fff;
+  border: 1.5px solid var(--navy);
+}
+.btn-navy:hover { background: #1a3d61; }
+.btn-outline {
+  background: transparent;
+  color: var(--navy);
+  border: 1.5px solid #C8D5E8;
+}
+.btn-outline:hover { background: var(--light); border-color: var(--navy); }
+.btn-pdf {
+  background: #FFF4E5;
+  color: #92400E;
+  border: 1.5px solid var(--yel);
+}
+.btn-pdf:hover { background: #FFE9B8; }
+.btn-disabled {
+  background: #F1F5F9;
+  color: #94A3B8;
+  border: 1.5px solid #E2E8F0;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn svg {
+  flex-shrink: 0;
+}
+
+/* FOOTER */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,.4);
+  text-align: center;
+  padding: 20px;
+  font-size: 11px;
+  border-top: 3px solid var(--yel);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-top">
+    <div class="hdr-sup">IDECA · UAECD Catastro Bogotá</div>
+    <h1>Diseño, construcción e interpretación<br>de indicadores para la gestión territorial</h1>
+    <div class="hdr-meta">
+      <span>4 sesiones · 90 min c/u</span>
+      <span>Metodología DANE–EFET</span>
+      <span>Estándares OCDE / CEPAL / ONU</span>
+      <span>Servidores públicos y contratistas</span>
+    </div>
+  </div>
+  <nav class="hdr-nav">
+    <a href="#objetivos">Objetivos</a>
+    <a href="#sesiones">Sesiones</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- OBJETIVOS -->
+  <section class="obj-section" id="objetivos">
+    <div class="sec-title">Objetivos del curso</div>
+    <div class="obj-grid">
+
+      <div class="obj-card" style="grid-column: 1 / -1">
+        <h3>Objetivo general</h3>
+        <p>Formar a servidores públicos y contratistas de IDECA en el diseño, construcción e interpretación de indicadores estadísticos para la gestión territorial, siguiendo la metodología del DANE y los estándares internacionales de OCDE, CEPAL y Naciones Unidas, de modo que cada participante pueda documentar un indicador propio aplicable a su entidad en una ficha técnica.</p>
+      </div>
+
+      <div class="obj-card yel" style="grid-column: 1 / -1">
+        <h3>Objetivos específicos</h3>
+        <ul class="obj-list">
+          <li>Comprender el papel de los indicadores dentro del ciclo de transformación de la información y su relación con la toma de decisiones en la gestión territorial.</li>
+          <li>Identificar el marco normativo colombiano que regula la producción estadística institucional, incluyendo los Principios Fundamentales de las Estadísticas Oficiales de la ONU.</li>
+          <li>Diferenciar tipos, fuentes y características de los indicadores según los criterios de calidad del DANE y la OCDE.</li>
+          <li>Aplicar las cuatro etapas metodológicas del DANE para construir y documentar indicadores en una ficha técnica.</li>
+          <li>Interpretar y comunicar los resultados de un indicador para apoyar la toma de decisiones y el monitoreo de políticas territoriales.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SESIONES -->
+  <section class="ses-section" id="sesiones">
+    <div class="sec-title">Sesiones</div>
+    <div class="ses-grid">
+
+      <!-- SESIÓN 1 -->
+      <div class="ses-card">
+        <div class="ses-num">
+          <div class="n">1</div>
+          <div class="lbl">Sesión</div>
+        </div>
+        <div class="ses-body">
+          <div class="ses-sub">Fundamentos</div>
+          <h3>De los datos a la toma de decisiones</h3>
+          <p>Ciclo de transformación de la información, Sistema Estadístico Nacional, marco normativo, Principios Fundamentales de la ONU, fuentes de información y distinción conceptual entre dato, métrica e indicador.</p>
+          <div class="topics">
+            <span class="topic-tag">Ciclo dato → política</span>
+            <span class="topic-tag">SEN · DANE · EFET</span>
+            <span class="topic-tag">Marco normativo</span>
+            <span class="topic-tag">10 Principios ONU</span>
+            <span class="topic-tag">Registro vs. operación estadística</span>
+            <span class="topic-tag">Dato · métrica · indicador</span>
+          </div>
+        </div>
+        <div class="ses-actions">
+          <a class="btn btn-navy" href="sesion_01_presentacion.html" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Ver presentación
+          </a>
+          <a class="btn btn-pdf" href="sesion_01_presentacion.html?pdf=1" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4"/><path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+            Exportar PDF
+          </a>
+          <a class="btn btn-outline" href="sesion_01_contenido.md" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Contenido sesión
+          </a>
+        </div>
+      </div>
+
+      <!-- SESIÓN 2 -->
+      <div class="ses-card pending">
+        <div class="ses-num">
+          <div class="n">2</div>
+          <div class="lbl">Sesión</div>
+        </div>
+        <div class="ses-body">
+          <div class="ses-sub">Calidad y tipología</div>
+          <h3>Marco normativo, calidad estadística y tipología de indicadores</h3>
+          <p>Normas colombianas de producción estadística, dimensiones de calidad OCDE/DANE, tipología de indicadores (eficiencia, eficacia, impacto, proceso) y su relación con el marco lógico.</p>
+          <div class="topics">
+            <span class="topic-tag">Ley 79 de 1993 · Decreto 262</span>
+            <span class="topic-tag">NTC GP 1000:2009</span>
+            <span class="topic-tag">Calidad estadística OCDE</span>
+            <span class="topic-tag">Tipología de indicadores</span>
+            <span class="topic-tag">Marco lógico</span>
+          </div>
+        </div>
+        <div class="ses-actions">
+          <span class="btn btn-disabled">Próximamente</span>
+        </div>
+      </div>
+
+      <!-- SESIÓN 3 -->
+      <div class="ses-card pending">
+        <div class="ses-num">
+          <div class="n">3</div>
+          <div class="lbl">Sesión</div>
+        </div>
+        <div class="ses-body">
+          <div class="ses-sub">Construcción</div>
+          <h3>Construcción de indicadores y línea base</h3>
+          <p>Las cuatro etapas metodológicas del DANE aplicadas a casos reales: identificación de variables, recolección y verificación de datos, selección y formulación del indicador, y elaboración de la ficha técnica.</p>
+          <div class="topics">
+            <span class="topic-tag">4 etapas DANE</span>
+            <span class="topic-tag">Selección de variables</span>
+            <span class="topic-tag">Línea base</span>
+            <span class="topic-tag">Ficha técnica</span>
+          </div>
+        </div>
+        <div class="ses-actions">
+          <span class="btn btn-disabled">Próximamente</span>
+        </div>
+      </div>
+
+      <!-- SESIÓN 4 -->
+      <div class="ses-card pending">
+        <div class="ses-num">
+          <div class="n">4</div>
+          <div class="lbl">Sesión</div>
+        </div>
+        <div class="ses-body">
+          <div class="ses-sub">Interpretación</div>
+          <h3>Interpretación, visualización y entregable final</h3>
+          <p>Lectura e interpretación de resultados, principios de visualización efectiva para indicadores territoriales y presentación de las fichas técnicas construidas durante el curso.</p>
+          <div class="topics">
+            <span class="topic-tag">Interpretación de resultados</span>
+            <span class="topic-tag">Visualización territorial</span>
+            <span class="topic-tag">Presentación de fichas</span>
+            <span class="topic-tag">Entregable final</span>
+          </div>
+        </div>
+        <div class="ses-actions">
+          <span class="btn btn-disabled">Próximamente</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  IDECA · UAECD Catastro Bogotá · Curso de indicadores para la gestión territorial
+</footer>
+
+</body>
+</html>
