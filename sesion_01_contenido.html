@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 1 — Contenido | Curso de indicadores IDECA</title>
+<style>
+:root {
+  --navy: #0E2841;
+  --yel:  #FFB001;
+  --red:  #CC1724;
+  --gold: #FDC23D;
+  --light: #F5F7FA;
+  --gray: #64748B;
+  --text: #1E293B;
+  --max: 820px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 15px;
+}
+
+/* BARRA SUPERIOR */
+.topbar {
+  background: var(--navy);
+  border-bottom: 3px solid var(--yel);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.topbar a.back {
+  color: rgba(255,255,255,.55);
+  text-decoration: none;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color .15s;
+}
+.topbar a.back:hover { color: var(--yel); }
+.topbar-sep { color: rgba(255,255,255,.2); font-size: 16px; }
+.topbar-title {
+  color: rgba(255,255,255,.7);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+.btn-sm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all .15s;
+}
+.btn-pres {
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.85);
+  border: 1px solid rgba(255,255,255,.2);
+}
+.btn-pres:hover { background: rgba(255,255,255,.22); color: #fff; }
+.btn-pdf {
+  background: var(--yel);
+  color: #1a1000;
+  border: 1px solid var(--gold);
+}
+.btn-pdf:hover { background: var(--gold); }
+
+/* HERO */
+.hero {
+  background: var(--navy);
+  padding: 40px 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,176,1,.06) 30%);
+  pointer-events: none;
+}
+.hero-sup {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--yel);
+  margin-bottom: 11px;
+  opacity: .8;
+}
+.hero h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  max-width: 640px;
+  margin-bottom: 14px;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hero-tag {
+  background: rgba(255,255,255,.09);
+  color: rgba(255,255,255,.6);
+  font-size: 11px;
+  padding: 4px 11px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+/* LAYOUT */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* SIDEBAR (TOC) */
+.sidebar {
+  position: sticky;
+  top: 52px;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+  padding: 28px 0 28px 28px;
+  border-right: 1px solid #DDE4EE;
+  background: #fff;
+}
+.sidebar-title {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gray);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--yel);
+}
+.toc { list-style: none; }
+.toc li { margin-bottom: 2px; }
+.toc a {
+  display: block;
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 5px 10px 5px 0;
+  border-radius: 4px;
+  line-height: 1.4;
+  transition: all .12s;
+}
+.toc a:hover { color: var(--navy); background: var(--light); padding-left: 6px; }
+.toc a.active { color: var(--navy); font-weight: 700; border-left: 3px solid var(--yel); padding-left: 7px; }
+.toc .sub a { font-size: 11px; padding-left: 12px; color: #94A3B8; }
+.toc .sub a:hover { color: var(--navy); }
+
+/* CONTENIDO */
+.content {
+  padding: 36px 44px 60px;
+  min-width: 0;
+}
+
+/* TIPOGRAFÍA */
+.content h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-top: 44px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--yel);
+  scroll-margin-top: 72px;
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 26px;
+  margin-bottom: 10px;
+  scroll-margin-top: 72px;
+}
+.content p {
+  margin-bottom: 14px;
+  color: var(--text);
+  max-width: 680px;
+}
+.content ul, .content ol {
+  padding-left: 0;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 680px;
+}
+.content li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.content ul li::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--yel);
+  border: 1.5px solid var(--navy);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.content ol { counter-reset: li; }
+.content ol li { counter-increment: li; }
+.content ol li::before {
+  content: counter(li);
+  background: var(--navy);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* BLOCKQUOTE */
+.content blockquote {
+  border-left: 4px solid var(--yel);
+  background: #FFFBEB;
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 18px 0;
+  max-width: 680px;
+}
+.content blockquote p {
+  font-style: italic;
+  color: #78350F;
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.content blockquote p:last-child { margin: 0; }
+.content blockquote cite, .content blockquote p em:last-child {
+  font-size: 11.5px;
+  color: #92400E;
+  font-style: normal;
+}
+
+/* TABLAS */
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 13.5px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.content th {
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+.content td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #EEF2F8;
+  line-height: 1.5;
+  vertical-align: top;
+}
+.content tr:last-child td { border-bottom: none; }
+.content tr:nth-child(even) td { background: #F8FAFC; }
+.content td strong { color: var(--navy); }
+
+/* CÓDIGO / CICLO */
+.content pre {
+  background: var(--navy);
+  color: #fff;
+  border-radius: 8px;
+  padding: 18px 22px;
+  font-family: 'Courier New', Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.9;
+  margin: 18px 0;
+  overflow-x: auto;
+}
+
+/* DIAGRAMA SEN */
+.org-chart {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 640px;
+}
+.org-row { display: flex; gap: 10px; justify-content: center; }
+.org-box {
+  background: var(--navy);
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.35;
+}
+.org-box.top { background: var(--red); font-size: 14px; min-width: 220px; }
+.org-box.lt { background: #EEF4FF; color: var(--navy); font-size: 11.5px; }
+.org-conn {
+  width: 1.5px;
+  background: #94A3B8;
+  height: 16px;
+  margin: 0 auto;
+}
+.org-hconn {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  justify-content: center;
+  margin: 0;
+}
+.org-hline { height: 1.5px; background: #94A3B8; flex: 1; max-width: 80px; }
+
+/* NOTA SESIÓN */
+.ses-note {
+  background: #EEF4FF;
+  border-left: 4px solid var(--navy);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--navy);
+  margin: 18px 0;
+  max-width: 680px;
+}
+
+/* BIBLIOGRAFÍA */
+.bib-list { list-style: none !important; gap: 0 !important; }
+.bib-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #EEF2F8;
+  font-size: 13.5px;
+  line-height: 1.6;
+  gap: 0 !important;
+}
+.bib-list li::before { display: none !important; }
+.bib-list a {
+  color: var(--red);
+  text-decoration: none;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.bib-list a:hover { text-decoration: underline; }
+
+/* PRINT */
+@media print {
+  .topbar, .sidebar, .topbar-actions, .hero-meta { display: none; }
+  .layout { grid-template-columns: 1fr; }
+  .content { padding: 0 20px; }
+  body { background: #fff; font-size: 13px; }
+  .content h2 { page-break-after: avoid; margin-top: 28px; }
+  .content h3 { page-break-after: avoid; }
+  .content table { page-break-inside: avoid; }
+  .content blockquote { page-break-inside: avoid; }
+  .hero { background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 20px 32px; }
+  .hero h1 { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      Volver al curso
+    </a>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-title">Sesión 1 — Contenido</span>
+  </div>
+  <div class="topbar-actions">
+    <a class="btn-sm btn-pres" href="sesion_01_presentacion.html" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      Ver presentación
+    </a>
+    <button class="btn-sm btn-pdf" onclick="window.print()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4"/><path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+      Descargar PDF
+    </button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-sup">Sesión 1 de 4 · IDECA · Curso de indicadores</div>
+  <h1>Fundamentos: de los datos a la toma de decisiones</h1>
+  <div class="hero-meta">
+    <span class="hero-tag">Diseño, construcción e interpretación de indicadores para la gestión territorial</span>
+    <span class="hero-tag">Metodología DANE–EFET</span>
+    <span class="hero-tag">Estándares OCDE / CEPAL / ONU</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR TOC -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="toc">
+      <li><a href="#s1">1. El hilo conductor</a></li>
+      <li><a href="#s2">2. SEN y el papel del DANE</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s2-1">Estructura del SEN</a></li>
+        <li><a href="#s2-2">Funciones del DANE</a></li>
+        <li><a href="#s2-3">Marco normativo</a></li>
+        <li><a href="#s2-4">EFET</a></li>
+      </ul></li>
+      <li><a href="#s3">3. Principios ONU</a></li>
+      <li><a href="#s4">4. Fuentes de información</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s4-1">Certificación estadística</a></li>
+      </ul></li>
+      <li><a href="#s5">5. De los datos a la información</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s5-1">¿Qué hace buena una medición?</a></li>
+        <li><a href="#s5-2">Bien semipúblico</a></li>
+        <li><a href="#s5-3">Riesgo de medirlo todo</a></li>
+      </ul></li>
+      <li><a href="#s6">6. Dato, métrica e indicador</a></li>
+      <li><a href="#s7">7. ¿Qué es un indicador?</a></li>
+      <li><a href="#s8">Bibliografía</a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <article class="content">
+
+    <h2 id="s1">1. El hilo conductor: de los datos a la política pública</h2>
+    <p>Todo el curso gira alrededor de un ciclo de transformación de la información (DANE, 2009):</p>
+    <pre>Dato  →  Información  →  Indicador  →  Línea base  →  Política pública
+                                              ↑                  ↓
+                                         Evaluación  ←  Monitoreo de resultados</pre>
+    <p>Cada eslabón agrega valor al anterior. Los datos se organizan y contextualizan para producir información; la información se estructura en indicadores que permiten comparar y evaluar; los indicadores se articulan en una línea base que sirve como punto de referencia en el tiempo; y esa línea base alimenta el diseño e implementación de políticas públicas. Pero el ciclo no termina ahí: una vez en marcha la política, los indicadores se usan para monitorear su avance y medir sus resultados e impactos, información que a su vez retroalimenta el ciclo para ajustar o reformular la política. Es un proceso continuo, no lineal (Zall Kusek &amp; Rist, 2004).</p>
+    <p>Esta cadena no opera en el vacío: existe un sistema institucional responsable de producirla con calidad, un marco normativo que la regula y principios internacionales que la orientan. Los siguientes apartados explican cada uno de esos componentes antes de llegar a la construcción del indicador en sí.</p>
+
+    <h2 id="s2">2. El Sistema Estadístico Nacional y el papel del DANE</h2>
+    <p>Para que el ciclo dato → política pública funcione, alguien tiene que ser responsable de producir y garantizar la calidad de la información. En Colombia, esa responsabilidad recae en el <strong>Sistema Estadístico Nacional (SEN)</strong>: el conjunto de organismos, normas, recursos y procesos que producen, coordinan y difunden la información estadística oficial del país (DANE, 2009).</p>
+    <p>Su propósito es garantizar que la información producida por el Estado sea coherente, confiable y comparable a lo largo del tiempo y entre territorios.</p>
+
+    <h3 id="s2-1">Estructura del SEN</h3>
+    <div class="org-chart">
+      <div class="org-box top">DANE<br><span style="font-size:11px;font-weight:400;opacity:.8">Organismo rector del SEN</span></div>
+      <div class="org-conn"></div>
+      <div class="org-hconn">
+        <div class="org-hline"></div>
+        <div class="org-hline"></div>
+        <div class="org-hline"></div>
+        <div class="org-hline"></div>
+      </div>
+      <div class="org-row">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <div class="org-conn"></div>
+          <div class="org-box" style="font-size:11px;min-width:130px">Ministerios y entidades<br>del orden nacional</div>
+          <div class="org-conn"></div>
+          <div class="org-box lt" style="min-width:130px">Estadísticas<br>sectoriales</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <div class="org-conn"></div>
+          <div class="org-box" style="font-size:11px;min-width:130px">Institutos adscritos<br>(IGAC, DNP, etc.)</div>
+          <div class="org-conn"></div>
+          <div class="org-box lt" style="min-width:130px">Estadísticas<br>especializadas</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <div class="org-conn"></div>
+          <div class="org-box" style="font-size:11px;min-width:130px">Gobernaciones</div>
+          <div class="org-conn"></div>
+          <div class="org-box lt" style="min-width:130px">Indicadores<br>departamentales</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <div class="org-conn"></div>
+          <div class="org-box" style="font-size:11px;min-width:130px">Municipios y Distritos<br>(Alcaldías)</div>
+          <div class="org-conn"></div>
+          <div class="org-box lt" style="min-width:130px">Registros e indicadores<br>territoriales</div>
+        </div>
+      </div>
+    </div>
+    <p>El DANE actúa como eje articulador: establece las metodologías, coordina a los productores y garantiza que la información fluya de manera coherente entre los niveles nacional, departamental y municipal (Decreto 262, 2004).</p>
+
+    <h3 id="s2-2">Funciones del DANE como organismo rector</h3>
+    <ul>
+      <li>Establecer y estandarizar las metodologías estadísticas para el país.</li>
+      <li>Coordinar la producción de estadísticas oficiales entre entidades del SEN.</li>
+      <li>Garantizar los estándares de calidad de la información pública.</li>
+      <li>Capacitar y asistir técnicamente a las entidades territoriales.</li>
+      <li>Custodiar y difundir la información estadística oficial.</li>
+    </ul>
+
+    <h3 id="s2-3">Marco normativo</h3>
+    <p>La producción estadística en Colombia no es discrecional: está regulada por un conjunto de normas que establecen obligaciones, responsabilidades y garantías tanto para los productores como para los usuarios de información.</p>
+    <table>
+      <tr><th>Norma</th><th>Qué regula</th></tr>
+      <tr><td><strong>Constitución Política, Art. 15</strong></td><td>Protección de datos personales (habeas data)</td></tr>
+      <tr><td><strong>Constitución Política, Art. 20</strong></td><td>Derecho a informar y recibir información veraz</td></tr>
+      <tr><td><strong>Constitución Política, Art. 74</strong></td><td>Acceso a documentos públicos</td></tr>
+      <tr><td><strong>Ley 79 de 1993</strong></td><td>Secreto estadístico, obligaciones de suministro de información al DANE y responsabilidades de las entidades en la producción de estadísticas oficiales</td></tr>
+      <tr><td><strong>Decreto 262 de 2004</strong></td><td>Estatuto orgánico del DANE: define su misión como coordinador del SEN, sus funciones técnicas y competencias para establecer metodologías estadísticas</td></tr>
+      <tr><td><strong>Ley 152 de 1994</strong></td><td>Ley Orgánica del Plan de Desarrollo: establece qué indicadores deben incluir los planes de desarrollo nacional y territorial</td></tr>
+      <tr><td><strong>NTC GP 1000:2009</strong></td><td>Norma Técnica de Calidad en la Gestión Pública: exige a las entidades públicas implementar un sistema de gestión de calidad con indicadores de seguimiento, medición y mejora continua</td></tr>
+    </table>
+    <div class="ses-note">El marco normativo se desarrolla en detalle en la <strong>Sesión 2</strong>, donde se analizará cómo cada norma genera obligaciones estadísticas concretas para las entidades territoriales.</div>
+
+    <h3 id="s2-4">La Estrategia para el Fortalecimiento Estadístico Territorial (EFET)</h3>
+    <p>La EFET es la apuesta del DANE por fortalecer las capacidades estadísticas de las entidades territoriales —departamentos, municipios y distritos— que producen o usan información para la gestión pública local (DANE, 2009).</p>
+    <p>Su metodología parte del diagnóstico de la situación estadística de cada entidad e incluye acompañamiento técnico para construir líneas base de indicadores, diseñar fichas técnicas y mejorar los procesos de recolección y uso de datos. <strong>Este curso sigue esa metodología.</strong></p>
+
+    <h2 id="s3">3. Los principios fundamentales de las estadísticas oficiales (ONU)</h2>
+    <p>El SEN no opera solo bajo normas colombianas: también está orientado por los <strong>Principios Fundamentales de las Estadísticas Oficiales</strong> adoptados por la Comisión de Estadística de las Naciones Unidas en 1994 y elevados a resolución de la Asamblea General en 2014 (A/RES/68/261). Estos principios son el referente internacional que da legitimidad a la producción estadística de los países miembros.</p>
+    <table>
+      <tr><th>#</th><th>Principio</th><th>Aplicación práctica</th></tr>
+      <tr><td>1</td><td><strong>Pertinencia, imparcialidad y acceso igualitario</strong></td><td>Las estadísticas deben responder a necesidades reales y estar disponibles para todos en igualdad de condiciones</td></tr>
+      <tr><td>2</td><td><strong>Estándares profesionales</strong></td><td>Los métodos deben regirse por criterios científicos y éticos, no por presiones políticas</td></tr>
+      <tr><td>3</td><td><strong>Rendición de cuentas y transparencia</strong></td><td>Documentar fuentes, métodos y procedimientos de cada operación estadística</td></tr>
+      <tr><td>4</td><td><strong>Prevención del uso indebido</strong></td><td>Las estadísticas no pueden usarse para inducir conclusiones erróneas</td></tr>
+      <tr><td>5</td><td><strong>Fuentes estadísticas</strong></td><td>Las fuentes deben seleccionarse con criterios de calidad, costo y carga para los informantes</td></tr>
+      <tr><td>6</td><td><strong>Confidencialidad</strong></td><td>Los datos individuales recolectados para fines estadísticos son estrictamente confidenciales</td></tr>
+      <tr><td>7</td><td><strong>Marco legal</strong></td><td>La producción estadística debe estar respaldada por normas claras</td></tr>
+      <tr><td>8</td><td><strong>Coordinación nacional</strong></td><td>Los organismos estadísticos coordinan entre sí para garantizar coherencia y evitar duplicidades</td></tr>
+      <tr><td>9</td><td><strong>Uso de estándares internacionales</strong></td><td>Facilita la comparabilidad entre países y regiones</td></tr>
+      <tr><td>10</td><td><strong>Cooperación internacional</strong></td><td>Los organismos estadísticos cooperan con organismos regionales e internacionales</td></tr>
+    </table>
+    <p>Para las entidades territoriales colombianas, los principios más críticos en la práctica cotidiana son la <strong>imparcialidad</strong> (producir datos sin sesgo político), la <strong>confidencialidad</strong> (proteger la información de los informantes) y la <strong>transparencia</strong> (documentar cómo y con qué fuentes se construyó cada indicador) (Naciones Unidas, 2014).</p>
+
+    <h2 id="s4">4. Fuentes de información: registro administrativo y operación estadística</h2>
+    <p>Con el marco institucional claro, el siguiente paso es entender de dónde provienen los datos que se usan para construir indicadores. En Colombia, las dos fuentes principales son los registros administrativos y las operaciones estadísticas. Confundirlas lleva a errores en el diseño y la interpretación de indicadores (DANE, 2009).</p>
+    <p>Un <strong>registro administrativo</strong> es información que una entidad pública genera como subproducto del cumplimiento de sus funciones misionales. No se produce con propósito estadístico, sino para gestionar trámites, contratos, licencias, atenciones u otros procesos institucionales. Ejemplo: el Registro de Instrumentos Públicos que administra la Superintendencia de Notariado y Registro (SNR).</p>
+    <p>Una <strong>operación estadística</strong> es un proceso diseñado deliberadamente para producir información cuantitativa sobre un fenómeno, siguiendo una metodología rigurosa que garantiza representatividad, comparabilidad y calidad. Incluye encuestas, censos y estudios estadísticos. Ejemplo: el Censo Nacional de Población y Vivienda del DANE.</p>
+    <table>
+      <tr><th></th><th>Registro administrativo</th><th>Operación estadística</th></tr>
+      <tr><td><strong>Propósito original</strong></td><td>Gestión institucional</td><td>Producción de información</td></tr>
+      <tr><td><strong>Diseño estadístico</strong></td><td>No</td><td>Sí</td></tr>
+      <tr><td><strong>Cobertura</strong></td><td>Depende del trámite</td><td>Definida por diseño muestral</td></tr>
+      <tr><td><strong>Control de calidad</strong></td><td>Variable</td><td>Sistemático</td></tr>
+      <tr><td><strong>Ejemplo</strong></td><td>Registro de Instrumentos Públicos — SNR</td><td>Censo Nacional de Población y Vivienda — DANE</td></tr>
+    </table>
+    <p>Ambas fuentes son válidas para construir indicadores, pero exigen tratamientos distintos. Un registro administrativo debe evaluarse cuidadosamente antes de usarse: puede tener subregistro, cambios en los criterios de captura entre periodos o coberturas incompletas. Una operación estadística ya incorpora ese control en su diseño, pero puede no estar disponible con la periodicidad que el indicador requiere.</p>
+    <blockquote>
+      <p>"Los registros administrativos constituyen una fuente de información valiosa para la producción estadística, siempre que se conozcan sus limitaciones y se apliquen los procedimientos adecuados para su aprovechamiento."</p>
+      <p>— DANE, <em>Guía para diseño, construcción e interpretación de indicadores</em> (2009)</p>
+    </blockquote>
+
+    <h3 id="s4-1">¿Cómo se certifica una operación estadística?</h3>
+    <p>El DANE administra el proceso de <strong>Certificación de Operaciones Estadísticas</strong>, mediante el cual una entidad del SEN puede acreditar que su operación cumple con los estándares de calidad para ser reconocida como estadística oficial. El proceso evalúa tres componentes:</p>
+    <ol>
+      <li><strong>Diseño metodológico:</strong> metodología documentada que define el objeto de medición, las variables, las fuentes, el marco muestral (si aplica) y los procedimientos de recolección y procesamiento.</li>
+      <li><strong>Gestión de la calidad:</strong> controles en cada etapa del proceso estadístico —recolección, crítica, imputación, estimación y difusión— siguiendo los lineamientos del DANE.</li>
+      <li><strong>Documentación y metadatos:</strong> información completa que permita a cualquier usuario entender qué mide la operación, cómo lo mide y cuáles son sus limitaciones.</li>
+    </ol>
+    <p>Una operación certificada recibe el <strong>Sello de Calidad Estadística del DANE</strong> y queda incluida en el Inventario de Operaciones Estadísticas (IOEC), lo que la habilita como fuente oficial para la construcción de indicadores de política pública.</p>
+
+    <h2 id="s5">5. De los datos a la información</h2>
+    <p>Los datos, por sí solos, no tienen valor para la gestión pública. Solo cuando se organizan, contextualizan e interpretan se convierten en <strong>información</strong>: un mensaje que reduce la incertidumbre y orienta la acción (DANE, 2009).</p>
+    <p>Esta distinción no es trivial. Una entidad puede acumular miles de registros administrativos y aun así carecer de información útil para tomar decisiones. La diferencia está en si esos registros han sido procesados con un propósito claro y una metodología rigurosa.</p>
+    <blockquote>
+      <p>"La información es el conjunto de datos que, una vez procesados, reducen la incertidumbre de quien toma decisiones."</p>
+      <p>— DANE, <em>Guía para diseño, construcción e interpretación de indicadores</em> (2009)</p>
+    </blockquote>
+
+    <h3 id="s5-1">¿Qué hace que una medición sea buena?</h3>
+    <p>El DANE (2009) establece cuatro características que toda medición debe cumplir para ser útil en la gestión territorial:</p>
+    <ul>
+      <li><strong>Pertinencia:</strong> la variable medida es relevante para el problema que se quiere resolver. Medir por medir no aporta.</li>
+      <li><strong>Precisión:</strong> el método de recolección y procesamiento minimiza los errores y sesgos.</li>
+      <li><strong>Oportunidad:</strong> la información está disponible en el momento en que se necesita para decidir. Un dato correcto pero tardío puede ser inútil.</li>
+      <li><strong>Economía:</strong> el costo de producir la información es razonable frente al beneficio que genera.</li>
+    </ul>
+
+    <h3 id="s5-2">La información como bien semipúblico</h3>
+    <p>A diferencia de los bienes privados, la información tiene dos propiedades económicas particulares que inciden directamente en la política pública (DANE, 2009):</p>
+    <ol>
+      <li><strong>Costos marginales decrecientes:</strong> a mayor volumen de información producida, menor es el costo de producir cada unidad adicional. Esto justifica la inversión en sistemas estadísticos centralizados como el SEN.</li>
+      <li><strong>No rivalidad en el consumo:</strong> varias entidades pueden usar la misma información simultáneamente sin que una excluya a la otra. Una tasa de cobertura de vacunación calculada por el DANE puede ser usada al mismo tiempo por el Ministerio de Salud, las secretarías departamentales y los municipios.</li>
+    </ol>
+    <p>Estas características explican por qué la asimetría de información entre entidades es un problema estructural en la política pública: quienes producen datos no siempre son quienes los necesitan, y quienes los necesitan no siempre saben que existen.</p>
+
+    <h3 id="s5-3">El riesgo de medirlo todo</h3>
+    <p>Una consecuencia frecuente de subestimar el costo de medir es la proliferación de indicadores irrelevantes. Producir muchos indicadores sin criterio de selección genera sobrecargas administrativas en las entidades productoras, dificulta identificar qué información es realmente estratégica y erosiona la confianza en los sistemas de información (Bonnefoy &amp; Armijo, 2005, CEPAL/ILPES).</p>
+    <p>La clave está en elegir <strong>variables adecuadas y suficientes</strong>, con base en criterios de calidad y utilidad para quien toma decisiones (DANE, 2009).</p>
+
+    <h2 id="s6">6. Dato, métrica e indicador: ¿en qué se diferencian?</h2>
+    <p>Con el contexto institucional y los conceptos de calidad claros, es posible precisar la diferencia entre tres términos que con frecuencia se usan como sinónimos pero que tienen naturalezas distintas (Pfenniger, 2004).</p>
+    <p>Un <strong>dato</strong> es una unidad de información bruta, sin contexto ni interpretación. Por sí solo no comunica nada: es el registro de un hecho observado (DANE, 2009). Ejemplo: <em>327 predios registrados en la localidad de Usaquén en 2024</em>.</p>
+    <p>Una <strong>métrica</strong> es el resultado de una operación matemática sobre datos. Organiza y resume, pero no necesariamente responde una pregunta de gestión (Bonnefoy &amp; Armijo, 2005, CEPAL/ILPES). Ejemplo: <em>promedio de predios por hectárea en las localidades de Bogotá</em>.</p>
+    <p>Un <strong>indicador</strong> es una expresión cuantitativa o cualitativa que relaciona variables para describir el comportamiento de un fenómeno a lo largo del tiempo o frente a una referencia. Está diseñado para apoyar una decisión concreta (DANE, 2009). Ejemplo: <em>porcentaje de predios formalizados en Usaquén respecto al total de la localidad en 2024</em>.</p>
+    <table>
+      <tr><th>Concepto</th><th>Qué es</th><th>Ejemplo</th></tr>
+      <tr><td><strong>Dato</strong></td><td>Registro bruto, sin contexto</td><td>327 predios registrados en Usaquén, 2024</td></tr>
+      <tr><td><strong>Métrica</strong></td><td>Cálculo sobre datos</td><td>Promedio de predios por hectárea en Bogotá</td></tr>
+      <tr><td><strong>Indicador</strong></td><td>Relación de variables orientada a una decisión</td><td>% de predios formalizados en Usaquén, 2024</td></tr>
+    </table>
+    <p>Lo que distingue a un indicador de los demás es que está diseñado desde el principio para responder una pregunta de gestión: no describe simplemente lo que hay, sino que permite evaluar si una situación mejora, empeora o se mantiene frente a una meta o referencia.</p>
+    <blockquote>
+      <p>"Un indicador es una expresión cualitativa o cuantitativa observable que permite describir características, comportamientos o fenómenos de la realidad a través de la evolución de una variable o la relación entre variables."</p>
+      <p>— DANE, <em>Guía para diseño, construcción e interpretación de indicadores</em> (2009, p. 13)</p>
+    </blockquote>
+
+    <h2 id="s7">7. ¿Qué es un indicador?</h2>
+    <p>El DANE define un indicador como:</p>
+    <blockquote>
+      <p>"Una expresión cualitativa o cuantitativa observable que permite describir características, comportamientos o fenómenos de la realidad a través de la evolución de una variable o la relación entre variables, para comparar con referentes, y que entrega información relevante sobre el estado de un asunto."</p>
+      <p>— DANE, <em>Guía para diseño, construcción e interpretación de indicadores</em> (2009)</p>
+    </blockquote>
+
+    <h3>Características básicas</h3>
+    <p>Todo indicador debe cumplir tres condiciones (DANE, 2009):</p>
+    <ul>
+      <li><strong>Simplificación:</strong> reduce la complejidad de un fenómeno a una expresión manejable, sin sacrificar su esencia.</li>
+      <li><strong>Medición:</strong> permite cuantificar o categorizar el fenómeno de manera replicable y verificable.</li>
+      <li><strong>Comunicación:</strong> transmite un mensaje claro a quien toma decisiones, sin requerir conocimiento técnico especializado para interpretarlo.</li>
+    </ul>
+
+    <h3>Objetivos de un indicador</h3>
+    <p>Un indicador bien construido cumple al menos uno de estos propósitos (DANE, 2009; Bonnefoy &amp; Armijo, 2005, CEPAL/ILPES):</p>
+    <ul>
+      <li>Generar información para apoyar decisiones de política pública.</li>
+      <li>Monitorear el cumplimiento de compromisos institucionales, normativos o de planeación.</li>
+      <li>Cuantificar cambios en variables estratégicas a lo largo del tiempo.</li>
+      <li>Hacer seguimiento al avance de planes, programas y proyectos.</li>
+    </ul>
+
+    <h2 id="s8">Bibliografía</h2>
+    <ul class="bib-list">
+      <li>Bonnefoy, J. C., &amp; Armijo, M. (2005). <em>Indicadores de desempeño en el sector público</em>. CEPAL/ILPES. Serie Manuales N.° 45. <a href="https://repositorio.cepal.org/handle/11362/5611" target="_blank">Descargar PDF</a></li>
+      <li>Congreso de Colombia. (1993). <em>Ley 79 de 1993 — Normas sobre secreto estadístico</em>. <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=1235" target="_blank">Ver norma</a></li>
+      <li>Congreso de Colombia. (1994). <em>Ley 152 de 1994 — Ley Orgánica del Plan de Desarrollo</em>. <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=327" target="_blank">Ver norma</a></li>
+      <li>DANE. (2009). <em>Guía para diseño, construcción e interpretación de indicadores</em>. DANE-DIRPEN. <a href="https://www.dane.gov.co/files/investigaciones/pib/nte/ibsc/Guia_construccion_interpretacion_indicadores.pdf" target="_blank">Descargar PDF</a></li>
+      <li>DANE. (2009). <em>Línea base de indicadores</em>. DANE-DIRPEN. <a href="https://www.dane.gov.co/files/investigaciones/pib/nte/ibsc/Linea_base_indicadores.pdf" target="_blank">Descargar PDF</a></li>
+      <li>DANE. (s.f.). <em>Certificación de Operaciones Estadísticas</em>. <a href="https://www.dane.gov.co/index.php/sistema-estadistico-nacional-sen/calidad/certificacion-de-operaciones-estadisticas" target="_blank">Ver portal</a></li>
+      <li>Naciones Unidas. (2014). <em>Principios fundamentales de las estadísticas oficiales</em>. Resolución A/RES/68/261. <a href="https://unstats.un.org/unsd/dnss/gp/fundprinciples.aspx" target="_blank">Ver documento</a></li>
+      <li>Pfenniger, M. (2004). <em>Indicadores y estadísticas culturales: un breve repaso conceptual</em>. Portal Iberoamericano de Gestión Cultural. <a href="https://www.gestioncultural.org/ficheros/BGC_AsocCulturales/mPfenniger.pdf" target="_blank">Ver documento</a></li>
+      <li>Presidencia de la República de Colombia. (2004). <em>Decreto 262 de 2004 — Estatuto orgánico del DANE</em>. <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=12645" target="_blank">Ver norma</a></li>
+      <li>Zall Kusek, J., &amp; Rist, R. C. (2004). <em>Ten steps to a results-based monitoring and evaluation system</em>. The World Bank. <a href="https://openknowledge.worldbank.org/handle/10986/14926" target="_blank">Ver documento</a></li>
+    </ul>
+
+  </article>
+</div>
+
+<script>
+// Resaltar sección activa en el TOC según scroll
+const headings = document.querySelectorAll('.content h2, .content h3');
+const tocLinks = document.querySelectorAll('.toc a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`.toc a[href="#${e.target.id}"]`);
+      if(link) link.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+headings.forEach(h => { if(h.id) obs.observe(h); });
+</script>
+
+</body>
+</html>
