@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 2 — Contenido | Curso de indicadores IDECA</title>
+<style>
+:root {
+  --navy: #0E2841;
+  --yel:  #FFB001;
+  --red:  #CC1724;
+  --gold: #FDC23D;
+  --light: #F5F7FA;
+  --gray: #64748B;
+  --text: #1E293B;
+  --max: 820px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 15px;
+}
+
+/* BARRA SUPERIOR */
+.topbar {
+  background: var(--navy);
+  border-bottom: 3px solid var(--yel);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar a.back {
+  color: rgba(255,255,255,.55);
+  text-decoration: none;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color .15s;
+}
+.topbar a.back:hover { color: var(--yel); }
+.topbar-sep { color: rgba(255,255,255,.2); font-size: 16px; }
+.topbar-title { color: rgba(255,255,255,.7); font-size: 12px; font-weight: 600; letter-spacing: .3px; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+.btn-sm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all .15s;
+}
+.btn-pres { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.2); }
+.btn-pres:hover { background: rgba(255,255,255,.22); color: #fff; }
+.btn-pdf { background: var(--yel); color: #1a1000; border: 1px solid var(--gold); }
+.btn-pdf:hover { background: var(--gold); }
+
+/* HERO */
+.hero {
+  background: var(--navy);
+  padding: 40px 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,176,1,.06) 30%);
+  pointer-events: none;
+}
+.hero-sup {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--yel);
+  margin-bottom: 11px;
+  opacity: .8;
+}
+.hero h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  max-width: 640px;
+  margin-bottom: 14px;
+}
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-tag {
+  background: rgba(255,255,255,.09);
+  color: rgba(255,255,255,.6);
+  font-size: 11px;
+  padding: 4px 11px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+/* LAYOUT */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: sticky;
+  top: 52px;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+  padding: 28px 0 28px 28px;
+  border-right: 1px solid #DDE4EE;
+  background: #fff;
+}
+.sidebar-title {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gray);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--yel);
+}
+.toc { list-style: none; }
+.toc li { margin-bottom: 2px; }
+.toc a {
+  display: block;
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 5px 10px 5px 0;
+  border-radius: 4px;
+  line-height: 1.4;
+  transition: all .12s;
+}
+.toc a:hover { color: var(--navy); background: var(--light); padding-left: 6px; }
+.toc a.active { color: var(--navy); font-weight: 700; border-left: 3px solid var(--yel); padding-left: 7px; }
+.toc .sub a { font-size: 11px; padding-left: 12px; color: #94A3B8; }
+.toc .sub a:hover { color: var(--navy); }
+
+/* CONTENIDO */
+.content { padding: 36px 44px 60px; min-width: 0; }
+
+/* TIPOGRAFÍA */
+.content h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-top: 44px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--yel);
+  scroll-margin-top: 72px;
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 28px;
+  margin-bottom: 10px;
+  scroll-margin-top: 72px;
+}
+.content p { margin-bottom: 14px; color: var(--text); max-width: 680px; }
+.content ul, .content ol {
+  padding-left: 0;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 680px;
+}
+.content li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.content ul li::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--yel);
+  border: 1.5px solid var(--navy);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.content ol { counter-reset: li; }
+.content ol li { counter-increment: li; }
+.content ol li::before {
+  content: counter(li);
+  background: var(--navy);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* BLOCKQUOTE */
+.content blockquote {
+  border-left: 4px solid var(--yel);
+  background: #FFFBEB;
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 18px 0;
+  max-width: 680px;
+}
+.content blockquote p {
+  font-style: italic;
+  color: #78350F;
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.content blockquote p:last-child { margin: 0; }
+.content blockquote cite {
+  font-size: 11.5px;
+  color: #92400E;
+  font-style: normal;
+  display: block;
+  margin-top: 6px;
+}
+
+/* TABLAS */
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 13.5px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.content th {
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+.content td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #EEF2F8;
+  line-height: 1.5;
+  vertical-align: top;
+}
+.content tr:last-child td { border-bottom: none; }
+.content tr:nth-child(even) td { background: #F8FAFC; }
+.content td strong { color: var(--navy); }
+
+/* NOTA SESIÓN */
+.ses-note {
+  background: #EEF4FF;
+  border-left: 4px solid var(--navy);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--navy);
+  margin: 18px 0;
+  max-width: 680px;
+}
+
+/* ALERTA / ADVERTENCIA */
+.alerta {
+  background: #FFF7ED;
+  border-left: 4px solid var(--red);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #7C2D12;
+  margin: 18px 0;
+  max-width: 680px;
+}
+.alerta strong { color: var(--red); }
+
+/* CRITERIOS DANE */
+.criterios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 20px 0;
+  max-width: 680px;
+}
+.criterio {
+  background: #fff;
+  border: 1px solid #DDE4EE;
+  border-radius: 8px;
+  padding: 16px;
+  border-top: 4px solid var(--navy);
+}
+.criterio-num {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gray);
+  margin-bottom: 4px;
+}
+.criterio h4 {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.criterio p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.55;
+  margin: 0;
+  max-width: none;
+}
+
+/* CADENA DE VALOR */
+.cadena {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 22px 0;
+  max-width: 680px;
+  overflow-x: auto;
+}
+.cadena-item {
+  flex: 1;
+  min-width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cadena-box {
+  background: var(--navy);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 6px;
+  width: 100%;
+  line-height: 1.3;
+}
+.cadena-box.impacto { background: var(--red); }
+.cadena-desc {
+  font-size: 11px;
+  color: var(--gray);
+  text-align: center;
+  padding: 8px 4px 0;
+  line-height: 1.4;
+}
+.cadena-arrow {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  color: #94A3B8;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* CLASIFICACIÓN BADGE */
+.tipo-badge {
+  display: inline-block;
+  background: var(--navy);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-right: 4px;
+  vertical-align: middle;
+  letter-spacing: .3px;
+}
+.tipo-badge.yel { background: var(--yel); color: #1a1000; }
+.tipo-badge.red { background: var(--red); }
+
+/* NOTA DISTINCIÓN */
+.distincion {
+  background: #F0FDF4;
+  border-left: 4px solid #16A34A;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #14532D;
+  margin: 16px 0;
+  max-width: 680px;
+}
+.distincion strong { color: #15803D; }
+
+/* BIBLIOGRAFÍA */
+.bib-list { list-style: none !important; gap: 0 !important; }
+.bib-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #EEF2F8;
+  font-size: 13.5px;
+  line-height: 1.6;
+  gap: 0 !important;
+}
+.bib-list li::before { display: none !important; }
+.bib-list a {
+  color: var(--red);
+  text-decoration: none;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.bib-list a:hover { text-decoration: underline; }
+
+/* CITA EN TEXTO */
+.cita {
+  font-size: 12px;
+  color: var(--gray);
+  font-style: normal;
+  vertical-align: baseline;
+}
+.fuente-tag {
+  display: inline-block;
+  background: #EEF4FF;
+  color: var(--navy);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  border: 1px solid #C7D7F5;
+}
+
+/* PRINT */
+@media print {
+  .topbar, .sidebar, .topbar-actions, .hero-meta { display: none; }
+  .layout { grid-template-columns: 1fr; }
+  .content { padding: 0 20px; }
+  body { background: #fff; font-size: 13px; }
+  .content h2 { page-break-after: avoid; margin-top: 28px; }
+  .content h3 { page-break-after: avoid; }
+  .content table { page-break-inside: avoid; }
+  .content blockquote { page-break-inside: avoid; }
+  .criterios { grid-template-columns: 1fr 1fr; }
+  .hero { background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 20px 32px; }
+  .hero h1 { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      Volver al curso
+    </a>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-title">Sesión 2 — Contenido</span>
+  </div>
+  <div class="topbar-actions">
+    <a class="btn-sm btn-pres" href="sesion_02_presentacion.html" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      Ver presentación
+    </a>
+    <button class="btn-sm btn-pdf" onclick="window.print()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4"/><path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+      Descargar PDF
+    </button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-sup">Sesión 2 de 4 · IDECA · Curso de indicadores</div>
+  <h1>Marco normativo, calidad estadística y tipología de indicadores</h1>
+  <div class="hero-meta">
+    <span class="hero-tag">Diseño, construcción e interpretación de indicadores para la gestión territorial</span>
+    <span class="hero-tag">Metodología DANE–EFET</span>
+    <span class="hero-tag">Estándares OCDE / CEPAL / ONU</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR TOC -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="toc">
+      <li><a href="#s1">1. El riesgo de medirlo todo</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s1a">Los cuatro criterios DANE</a></li>
+        <li><a href="#s1b">Señales de alerta</a></li>
+      </ul></li>
+      <li><a href="#s2">2. Marco normativo</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s2a">Obligaciones concretas</a></li>
+        <li><a href="#s2b">Situaciones para analizar</a></li>
+      </ul></li>
+      <li><a href="#s3">3. Tipología de indicadores</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s3a">Por nivel jerárquico</a></li>
+        <li><a href="#s3b">Por naturaleza</a></li>
+        <li><a href="#s3c">Por función</a></li>
+        <li><a href="#s3d">Por cadena de valor</a></li>
+        <li><a href="#s3e">Por forma de expresión</a></li>
+        <li><a href="#s3f">Por temporalidad</a></li>
+      </ul></li>
+      <li><a href="#s4">4. Ejercicio y autoevaluación</a></li>
+      <li><a href="#s5">5. Bibliografía</a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="content">
+
+    <div class="ses-note">
+      <strong>Hilo conductor —</strong> En la Sesión 1 respondimos: ¿qué es un indicador y de dónde vienen los datos? En esta sesión respondemos: ¿cuándo vale la pena medir?, ¿qué obliga a medir el marco normativo? y ¿de qué tipo es el indicador que cada participante quiere construir?
+    </div>
+
+    <!-- SECCIÓN 1 -->
+    <h2 id="s1">1. El riesgo de medirlo todo</h2>
+
+    <p>Medir no es gratuito. Cada indicador implica tiempo de personal, sistemas de información, procesos de validación y recursos para reportar. Cuando una entidad produce indicadores sin preguntarse si los va a usar, acumula información que nadie consulta, sobrecarga los equipos y termina midiendo lo que siempre se ha medido, no lo que necesita saber para decidir.</p>
+
+    <p>El error más frecuente en entidades públicas es producir indicadores porque "siempre se han pedido", no porque respondan a una pregunta de gestión real. Antes de construir un indicador, la pregunta es: ¿vale la pena medir esto?</p>
+
+    <h3 id="s1a">Recordatorio: los cuatro criterios DANE</h3>
+
+    <p>Vistos en la Sesión 1. Antes de construir cualquier indicador, verificar que la medición cumpla estas cuatro condiciones:</p>
+
+    <div class="criterios">
+      <div class="criterio">
+        <div class="criterio-num">Criterio 1</div>
+        <h4>Pertinencia</h4>
+        <p>La información responde a una necesidad real de quienes toman decisiones.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Criterio 2</div>
+        <h4>Precisión</h4>
+        <p>La medición es suficientemente exacta para el propósito que se persigue.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Criterio 3</div>
+        <h4>Oportunidad</h4>
+        <p>La información llega a tiempo para influir en la decisión.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Criterio 4</div>
+        <h4>Economía</h4>
+        <p>El costo de producir la información es razonable frente al valor que genera.</p>
+      </div>
+    </div>
+
+    <h3 id="s1b">Señales de alerta: ¿está midiendo de más?</h3>
+
+    <p>Una entidad está midiendo de más cuando:</p>
+
+    <ul>
+      <li>Produce indicadores que no aparecen en ningún informe de gestión ni plan de acción.</li>
+      <li>Nadie sabe quién solicitó ese indicador ni para qué decisión sirve.</li>
+      <li>El equipo dedica más tiempo a consolidar datos que a analizarlos.</li>
+      <li>Los informes de seguimiento acumulan decenas de indicadores sin ningún análisis de los que se alejaron de la meta.</li>
+      <li>Los indicadores no cambian de un año para otro, aunque el contexto sí haya cambiado.</li>
+    </ul>
+
+    <div class="alerta">
+      <strong>Reflexión para la sesión —</strong> ¿Cuántos indicadores produce su entidad? ¿Cuántos se usan realmente para tomar decisiones? La brecha entre esos dos números es el punto de partida para un sistema de indicadores más útil.
+    </div>
+
+    <!-- SECCIÓN 2 -->
+    <h2 id="s2">2. Marco normativo en profundidad</h2>
+
+    <p>En la Sesión 1 se presentó la tabla de normas que regulan la producción estadística en Colombia. En esta sesión analizamos qué obliga concretamente cada una, quién es el responsable en la entidad y qué ocurre si no se cumple. Medir no es optativo: hay mandato legal. <span class="cita">(Constitución Política de Colombia, arts. 15, 20 y 74; Ley 2335/2023; Ley 152/1994; Ley 388/1997; Decreto 262/2004; Resolución 1118/2020; NTC PE 1000:2020)</span></p>
+
+    <h3 id="s2a">Obligaciones concretas por norma</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Norma</th>
+          <th>Obligación concreta para entidades territoriales</th>
+          <th>Riesgo de incumplimiento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ley 2335 de 2023</strong><br><small style="color:#64748B">(deroga Ley 79/1993)</small></td>
+          <td>Secreto estadístico: los datos individuales recogidos con fines estadísticos no pueden usarse para fines administrativos ni divulgarse de forma que identifiquen al informante, independientemente de la fuente.</td>
+          <td>Nulidad de actos administrativos basados en datos individuales; responsabilidad disciplinaria.</td>
+        </tr>
+        <tr>
+          <td><strong>Decreto 262 de 2004</strong><br><small style="color:#64748B">(modifica estructura orgánica del DANE)</small></td>
+          <td>Las entidades del SEN deben adoptar las metodologías DANE para producir estadísticas oficiales y coordinar su producción dentro del Sistema Estadístico Nacional.</td>
+          <td>Descertificación de la operación estadística; exclusión del inventario de operaciones estadísticas con calidad (IOEC).</td>
+        </tr>
+        <tr>
+          <td><strong>Ley 152 de 1994</strong><br><small style="color:#64748B">Ley Orgánica del Plan de Desarrollo</small></td>
+          <td>Los planes de desarrollo territoriales deben incluir indicadores de resultado con línea base verificable y metas cuantificadas. El sistema de seguimiento y evaluación es obligatorio, no optativo (Art. 29).</td>
+          <td>Observaciones de control político; riesgo en la evaluación de desempeño del ente territorial.</td>
+        </tr>
+        <tr>
+          <td><strong>Ley 388 de 1997, Art. 28</strong><br><small style="color:#64748B">(mod. D.L. 2106/2019 — Ley de Desarrollo Territorial)</small></td>
+          <td>Las revisiones del Plan de Ordenamiento Territorial (POT) deben sustentarse en "parámetros e indicadores de seguimiento" sobre usos del suelo, población urbana, infraestructura y equipamientos. Para entidades como UAECD, el catastro multipropósito es el insumo estadístico principal de esa medición.</td>
+          <td>Las revisiones del POT sin indicadores de soporte técnico pueden ser objetadas por el Concejo o por organismos de control territorial; el catastro que no alimenta ese sistema pierde pertinencia institucional.</td>
+        </tr>
+        <tr>
+          <td><strong>Resolución 1118 de 2020</strong><br><small style="color:#64748B">(DANE)</small></td>
+          <td>Adopta y hace obligatoria la NTC PE 1000:2020 para todas las entidades del SEN que producen y difunden estadísticas. Las entidades deben implementar sus requisitos y someterse al Programa Anual de Evaluación de Calidad Estadística (PECE).</td>
+          <td>Exclusión del inventario de operaciones estadísticas certificadas (IOEC); pérdida de validez como estadística oficial.</td>
+        </tr>
+        <tr>
+          <td><strong>NTC PE 1000:2020</strong></td>
+          <td>Establece los requisitos de calidad para las 8 fases del proceso estadístico. Toda operación estadística del SEN debe documentar, ejecutar y evaluar cada fase siguiendo sus lineamientos.</td>
+          <td>Descertificación de la operación estadística; las cifras no pueden citarse como estadística oficial del SEN.</td>
+        </tr>
+        <tr>
+          <td><strong>Constitución, Arts. 15, 20 y 74</strong></td>
+          <td>Protección de datos personales (habeas data), derecho a informar con veracidad y acceso a documentos públicos. Los indicadores que usen datos individuales deben cumplir habeas data; los datos producidos con recursos públicos deben ser accesibles.</td>
+          <td>Tutelas; sanciones de la Superintendencia de Industria y Comercio (SIC).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 id="s2b">Situaciones para analizar: ¿qué norma se incumple?</h3>
+
+    <p>Las siguientes situaciones ilustran cómo se materializan los incumplimientos normativos en el contexto catastral. Identifique en cada caso qué norma se está vulnerando y por qué.</p>
+
+    <div class="ses-note">
+      <strong>Situación 1 —</strong> La UAECD cruza los registros nominales de una encuesta de hogares sobre percepción del catastro con el padrón de contribuyentes para identificar quiénes no han pagado el impuesto predial y cobrarles directamente.
+      <br><br>
+      <strong>Norma incumplida:</strong> <strong>Ley 2335/2023.</strong> Los datos recogidos con fines estadísticos no pueden usarse para fines administrativos individuales. El secreto estadístico protege al informante independientemente de si la fuente es interna o externa a la entidad.
+    </div>
+
+    <div class="ses-note">
+      <strong>Situación 2 —</strong> El Plan de Desarrollo Distrital 2024–2027 incluye el indicador "porcentaje de predios con catastro multipropósito implementado" pero no registra cuál era ese porcentaje en 2024 al inicio del período.
+      <br><br>
+      <strong>Norma incumplida:</strong> <strong>Ley 152/1994, Art. 29.</strong> Los planes de desarrollo deben incluir indicadores con línea base verificable. Sin línea base no es posible medir el avance real ni rendir cuentas sobre el cumplimiento de la meta.
+    </div>
+
+    <div class="ses-note">
+      <strong>Situación 3 —</strong> Una entidad pública incluida en el SEN con aval de la NTC PE 1000:2020 presenta su informe de seguimiento estadístico sin datos de medición de la calidad en ninguna etapa del proceso, argumentando que "no hubo tiempo de medirlos".
+      <br><br>
+      <strong>Norma incumplida:</strong> <strong>NTC PE 1000:2020.</strong> La norma exige medir, analizar y usar indicadores de proceso como parte del ciclo PHVA. La certificación implica que ese requisito se cumple de forma continua. "No hubo tiempo" no es una justificación válida dentro del sistema de gestión de calidad.
+    </div>
+
+    <h3>Las 8 fases del proceso estadístico <span class="fuente-tag">NTC PE 1000:2020 · Res. 1118/2020</span></h3>
+
+    <p>La NTC PE 1000:2020, adoptada mediante Resolución 1118 de 2020, organiza toda operación estadística en ocho fases secuenciales. Cada indicador que produce una entidad del SEN debe poder trazarse a través de estas fases: si alguna no está documentada o ejecutada, la estadística no cumple los requisitos de calidad para ser oficial. <span class="cita">(DANE, NTC PE 1000:2020, secs. 5–12)</span></p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0;max-width:680px;">
+      <div style="background:#fff;border:1px solid #DDE4EE;border-radius:8px;padding:14px;border-left:4px solid #0E2841;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#64748B;margin-bottom:4px;">Fase 1</div>
+        <div style="font-size:13.5px;font-weight:700;color:#0E2841;margin-bottom:5px;">Detección y análisis de necesidades</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">Identificar quiénes necesitan la información, qué necesitan saber y si ya existe una fuente que lo cubra. Determina si vale la pena producir la operación.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #DDE4EE;border-radius:8px;padding:14px;border-left:4px solid #FFB001;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#64748B;margin-bottom:4px;">Fase 2</div>
+        <div style="font-size:13.5px;font-weight:700;color:#0E2841;margin-bottom:5px;">Diseño</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">Definir la metodología: variables, marco muestral o universo, instrumento de recolección, procedimientos de procesamiento y plan de difusión.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #DDE4EE;border-radius:8px;padding:14px;border-left:4px solid #7C3AED;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#64748B;margin-bottom:4px;">Fase 3</div>
+        <div style="font-size:13.5px;font-weight:700;color:#0E2841;margin-bottom:5px;">Construcción</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">Construir los instrumentos, marcos, aplicativos y materiales definidos en el diseño. Incluye pruebas piloto para verificar que el diseño funciona antes de ejecutar.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #DDE4EE;border-radius:8px;padding:14px;border-left:4px solid #2563EB;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#64748B;margin-bottom:4px;">Fase 4</div>
+        <div style="font-size:13.5px;font-weight:700;color:#0E2841;margin-bottom:5px;">Recolección o acopio</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">Capturar los datos según la metodología definida, ya sea mediante encuesta, censo, registro administrativo o fuentes secundarias. Incluye control de calidad en campo.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #DDE4EE;border-radius:8px;padding:14px;border-left:4px solid #374151;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#64748B;margin-bottom:4px;">Fase 5</div>
+        <div style="font-size:13.5px;font-weight:700;color:#0E2841;margin-bottom:5px;">Procesamiento</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">Integrar, codificar, validar, editar e imputar los datos recolectados. Producir los archivos finales listos para el análisis.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #DDE4EE;border-radius:8px;padding:14px;border-left:4px solid #CC1724;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#64748B;margin-bottom:4px;">Fase 6</div>
+        <div style="font-size:13.5px;font-weight:700;color:#0E2841;margin-bottom:5px;">Análisis</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">Calcular los resultados, agregar los datos, interpretar los hallazgos y preparar los productos estadísticos que serán difundidos.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #DDE4EE;border-radius:8px;padding:14px;border-left:4px solid #0E2841;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#64748B;margin-bottom:4px;">Fase 7</div>
+        <div style="font-size:13.5px;font-weight:700;color:#0E2841;margin-bottom:5px;">Difusión</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">Publicar y distribuir los resultados estadísticos con sus metadatos, notas metodológicas y medidas de calidad. Garantiza acceso igualitario e imparcial a la información.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #DDE4EE;border-radius:8px;padding:14px;border-left:4px solid #FFB001;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#64748B;margin-bottom:4px;">Fase 8</div>
+        <div style="font-size:13.5px;font-weight:700;color:#0E2841;margin-bottom:5px;">Evaluación</div>
+        <div style="font-size:12.5px;color:#475569;line-height:1.5;">Medir el desempeño de la operación estadística: calidad de los datos, satisfacción de los usuarios y cumplimiento de los estándares. Los resultados retroalimentan el rediseño de la siguiente edición.</div>
+      </div>
+    </div>
+
+    <div class="ses-note">El ciclo es continuo: la <strong>evaluación</strong> de cada edición alimenta la <strong>detección de necesidades</strong> de la siguiente. Las entidades del SEN deben documentar y ejecutar las 8 fases en cada operación estadística que produzcan para que sus cifras sean reconocidas como estadísticas oficiales.</div>
+
+    <!-- SECCIÓN 3 -->
+    <h2 id="s3">3. Tipología de indicadores</h2>
+
+    <p>Clasificar un indicador antes de construirlo no es un trámite formal: determina qué fórmula usar, qué fuente se necesita, con qué frecuencia debe producirse y a quién va dirigido. Si el tipo está mal, la fórmula también lo estará.</p>
+
+    <p>La metodología DANE–CEPAL organiza los indicadores en seis criterios de clasificación. Un mismo indicador puede —y debe— clasificarse por los seis.</p>
+
+    <!-- CLASIFICACIÓN 1 -->
+    <h3 id="s3a">Clasificación 1 — Por nivel jerárquico <span class="fuente-tag">DANE, 2009 · sec. 2.3.3</span></h3>
+
+    <p>El DANE (2009) distingue dos grandes niveles según qué eslabón de la cadena de valor mide el indicador y quién lo usa para tomar decisiones.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>¿Qué mide según DANE?</th>
+          <th>¿Quién lo usa?</th>
+          <th>Ejemplo UAECD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tipo-badge">Estratégico</span></td>
+          <td>Los <strong>productos generados</strong>, los <strong>efectos</strong> en la población objetivo y los <strong>impactos</strong> de largo plazo de la política institucional</td>
+          <td>Alta dirección, Concejo Distrital, organismos de control</td>
+          <td>% de predios del Distrito con información catastral actualizada</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge yel">De gestión</span></td>
+          <td>El uso de <strong>insumos</strong> y el desempeño de los <strong>procesos internos</strong>; permite verificar si se está ejecutando bien</td>
+          <td>Subdirecciones, coordinadores de proceso</td>
+          <td>Tiempo promedio en días hábiles para resolver una mutación tipo 1</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="distincion">
+      El indicador <strong>estratégico</strong> dice si se están generando los productos y efectos esperados. El indicador <strong>de gestión</strong> dice si los insumos y procesos funcionan bien para producirlos. Los dos son necesarios: sin el estratégico no se sabe si se llega al resultado; sin el de gestión no se sabe por qué no se llega. <span class="cita">(DANE, 2009, p. 17)</span>
+    </div>
+
+    <!-- CLASIFICACIÓN 2 -->
+    <h3 id="s3b">Clasificación 2 — Por su naturaleza <span class="fuente-tag">DANE, 2009 · sec. 2.3.1</span></h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Definición</th>
+          <th>Ejemplo UAECD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tipo-badge">Cuantitativo</span></td>
+          <td>Expresa una magnitud numérica directamente medible</td>
+          <td>Número de mutaciones tipo 1 registradas en el trimestre</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge yel">Cualitativo</span></td>
+          <td>Describe un nivel de condición o grado de avance mediante categorías ordenadas; no se expresa como número sino como estadío</td>
+          <td>Estadío de interoperabilidad de la UAECD en el Marco de Interoperabilidad MinTIC<br><small style="color:#64748B">(Inicial / En proceso / Definido / Gestionado / Optimizado)</small></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p>Los indicadores cualitativos aparecen cuando se evalúan condiciones institucionales que no tienen fuente numérica directa: capacidades, grados de adopción normativa o niveles de madurez. El <strong>estadío de interoperabilidad</strong> es un ejemplo de este tipo: MinTIC define un Modelo de Madurez con cinco niveles para medir qué tan avanzada está una entidad en el intercambio de datos con otras del Estado. La UAECD, como productora de información catastral que comparte datos con la SNR, el IGAC y los municipios, tiene un estadío en ese modelo. <span class="cita">(MinTIC. Marco de Interoperabilidad para Gobierno Digital. <a href="https://lenguaje.mintic.gov.co/marco-de-interoperabilidad" target="_blank">lenguaje.mintic.gov.co</a>)</span></p>
+    </blockquote>
+
+    <!-- CLASIFICACIÓN 3 -->
+    <h3 id="s3c">Clasificación 3 — Por su función <span class="fuente-tag">Bonnefoy &amp; Armijo, 2005</span></h3>
+
+    <p>Responde a la pregunta: ¿para qué decisión sirve este indicador? Esta clasificación es propia de los sistemas de monitoreo y evaluación de políticas públicas. <span class="cita">(Bonnefoy &amp; Armijo, 2005, pp. 21-28)</span></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>¿Para qué sirve?</th>
+          <th>Ejemplo UAECD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tipo-badge">Seguimiento</span></td>
+          <td>Monitorear el avance continuo de un proceso o meta durante el período</td>
+          <td>% de solicitudes de conservación catastral (mutaciones, rectificaciones y actualizaciones físicas) atendidas dentro del plazo legal, respecto a la meta mensual del plan de acción</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge yel">Evaluación</span></td>
+          <td>Medir el logro al final de un período o programa</td>
+          <td>Variación porcentual del número de predios con actualización catastral vigente entre el año de inicio y el cierre del Plan de Desarrollo Distrital</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge">Línea base</span></td>
+          <td>Establecer el punto de partida antes de una intervención; permite comparar después</td>
+          <td>% de predios del Distrito sin actualización física ni jurídica, medido antes de iniciar una intervención de actualización catastral</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge red">Alerta</span></td>
+          <td>Detectar desviaciones que requieren acción inmediata antes de que se consoliden</td>
+          <td>Porcentaje de formularios de conservación catastral rechazados por errores de captura o documentación incompleta, respecto al total ingresado en el período</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CLASIFICACIÓN 4 -->
+    <h3 id="s3d">Clasificación 4 — Por su posición en la cadena de valor <span class="fuente-tag">DANE, 2009 · sec. 2.3.2</span></h3>
+
+    <p>El <strong>marco lógico</strong> o cadena de valor es una herramienta de planificación y evaluación que establece la relación causal entre los recursos invertidos, las actividades realizadas, los bienes y servicios producidos, los cambios en la población objetivo y las transformaciones de largo plazo. Permite identificar <em>en qué eslabón se produce la falla</em> cuando los resultados no se alcanzan. <span class="cita">(DANE, 2009, sec. 2.3.2; Bonnefoy &amp; Armijo, 2005, pp. 35-44; Kusek &amp; Rist, 2004, pp. 65-82)</span></p>
+
+    <p>Aplicada a los indicadores, esta lógica responde una pregunta clave: ¿qué está midiendo realmente este indicador? ¿Lo que se invierte, lo que se hace, lo que se produce, o el efecto que tiene sobre las personas o el territorio? La respuesta cambia completamente el diseño, la fórmula y la fuente de datos.</p>
+
+    <p>Se ilustra con el ejemplo de la <strong>construcción de una escuela rural</strong>, libre de tecnicismos sectoriales.</p>
+
+    <div class="cadena">
+      <div class="cadena-item">
+        <div class="cadena-box">Insumos</div>
+        <div class="cadena-desc">Recursos<br>asignados</div>
+      </div>
+      <div class="cadena-arrow">→</div>
+      <div class="cadena-item">
+        <div class="cadena-box">Actividades</div>
+        <div class="cadena-desc">Lo que se hace<br>con los recursos</div>
+      </div>
+      <div class="cadena-arrow">→</div>
+      <div class="cadena-item">
+        <div class="cadena-box">Productos</div>
+        <div class="cadena-desc">Lo que se<br>entrega</div>
+      </div>
+      <div class="cadena-arrow">→</div>
+      <div class="cadena-item">
+        <div class="cadena-box">Resultados</div>
+        <div class="cadena-desc">Cambio en<br>la población</div>
+      </div>
+      <div class="cadena-arrow">→</div>
+      <div class="cadena-item">
+        <div class="cadena-box impacto">Impacto</div>
+        <div class="cadena-desc">Transformación<br>de largo plazo</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Eslabón</th>
+          <th>¿Qué mide?</th>
+          <th>Escuela rural</th>
+          <th>Indicador típico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tipo-badge">Insumos</span></td>
+          <td>Recursos asignados para ejecutar</td>
+          <td>$800 millones de presupuesto · lote disponible · 3 docentes contratados</td>
+          <td>% de ejecución presupuestal</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge yel">Actividades</span></td>
+          <td>Lo que se hace con esos recursos</td>
+          <td>Diseño arquitectónico · licitación de obra · capacitación docente</td>
+          <td>N.° de sesiones de capacitación realizadas</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge">Productos</span></td>
+          <td>Lo que se entrega al finalizar</td>
+          <td>1 escuela con 6 aulas · 3 docentes certificados</td>
+          <td>N.° de aulas entregadas en condiciones de uso</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge yel">Resultados</span></td>
+          <td>Cambio en la situación de la población</td>
+          <td>180 niños matriculados · tasa de asistencia del 85%</td>
+          <td>Variación en la tasa de asistencia escolar en la vereda</td>
+        </tr>
+        <tr>
+          <td><span class="tipo-badge red">Impacto</span></td>
+          <td>Transformación estructural de largo plazo</td>
+          <td>Reducción del embarazo adolescente del 18% al 7% en 5 años</td>
+          <td>Tasa de embarazo en adolescentes de 10 a 19 años en la zona de influencia</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alerta">
+      <strong>Error frecuente —</strong> Reportar el eslabón equivocado respecto a la pregunta que se quiere responder. Si la pregunta es "¿mejoró el acceso a educación en la vereda?", la respuesta está en el eslabón de <em>resultados</em> (niños matriculados, asistencia escolar), no en el de <em>productos</em> (aulas construidas). Una escuela construida pero vacía cumple la meta de producto y falla la de resultado. En catastro ocurre lo mismo: si la pregunta es "¿disminuyó la informalidad predial?", el indicador debe estar en resultados o impacto, no en el conteo de mutaciones registradas. Medir el eslabón equivocado da la impresión de avance cuando el problema de fondo no se ha movido.
+    </div>
+
+    <!-- CLASIFICACIÓN 5 -->
+    <h3 id="s3e">Clasificación 5 — Por su forma de expresión <span class="fuente-tag">DANE, 2009; OCDE, 2002</span></h3>
+
+    <p>Define cómo se calcula y comunica la magnitud. La elección no es estética: cada forma tiene una interpretación distinta y sirve para preguntas distintas. <span class="cita">(DANE, 2009; OCDE, 2002, Glosario de términos sobre evaluación)</span></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Forma</th>
+          <th>Definición</th>
+          <th>Cuándo usarla</th>
+          <th>Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Valor absoluto</strong></td>
+          <td>Número o magnitud sin denominador</td>
+          <td>Cuando el tamaño importa en sí mismo</td>
+          <td>892 solicitudes de conservación recibidas en marzo</td>
+        </tr>
+        <tr>
+          <td><strong>Proporción</strong></td>
+          <td>Parte sobre el total del mismo conjunto; resultado entre 0 y 1 (o expresado × 100)</td>
+          <td>Cuando se quiere saber qué fracción del total cumple una condición</td>
+          <td>0,78 — es decir, 78 de cada 100 solicitudes atendidas dentro del plazo sobre el total recibido</td>
+        </tr>
+        <tr>
+          <td><strong>Porcentaje</strong></td>
+          <td>Proporción expresada por cada 100 unidades</td>
+          <td>Forma más usada y comprensible; ideal para comunicar proporciones</td>
+          <td>78% de solicitudes de conservación atendidas en plazo</td>
+        </tr>
+        <tr>
+          <td><strong>Tasa</strong></td>
+          <td>Eventos ocurridos en una población de referencia, expresada por cada n unidades (1.000, 10.000, 100.000)</td>
+          <td>Cuando se quiere comparar entre poblaciones o territorios de distinto tamaño</td>
+          <td>12,4 predios actualizados por cada 1.000 predios registrados en el trimestre</td>
+        </tr>
+        <tr>
+          <td><strong>Razón</strong></td>
+          <td>Relación entre dos magnitudes de distinta naturaleza que no comparten denominador</td>
+          <td>Cuando se relacionan dos variables distintas</td>
+          <td>Costo promedio por predio actualizado (miles de pesos / unidad predial)</td>
+        </tr>
+        <tr>
+          <td><strong>Índice</strong></td>
+          <td>Combina varias variables en una sola expresión normalizada</td>
+          <td>Cuando ninguna variable aislada captura el fenómeno completo</td>
+          <td>Índice de rezago catastral (combina desactualización física, jurídica y económica)</td>
+        </tr>
+        <tr>
+          <td><strong>Promedio</strong></td>
+          <td>Valor central de una distribución</td>
+          <td>Cuando importa el valor típico de un conjunto</td>
+          <td>Tiempo promedio de resolución de mutación tipo 1 (días hábiles)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="distincion">
+      <strong>Distinción clave: proporción vs. tasa.</strong> La <strong>proporción</strong> compara parte sobre el total del mismo universo (solicitudes atendidas / solicitudes recibidas). La <strong>tasa</strong> compara eventos en una población de referencia que puede ser diferente al universo de eventos (predios actualizados por cada 1.000 predios registrados). El denominador es lo que las diferencia: en la proporción el denominador incluye los casos; en la tasa es la población expuesta. Confundirlas es uno de los errores técnicos más frecuentes en indicadores de gestión pública.
+    </div>
+
+    <!-- CLASIFICACIÓN 6 -->
+    <h3 id="s3f">Clasificación 6 — Por temporalidad <span class="fuente-tag">Kusek &amp; Rist, 2004</span></h3>
+
+    <p>Indica si el indicador mide una condición en un momento, un movimiento durante un período, una acumulación desde un punto de partida o una dirección en el tiempo. <span class="cita">(Kusek &amp; Rist, 2004, pp. 89-95)</span></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Definición</th>
+          <th>Pregunta que responde</th>
+          <th>Ejemplo UAECD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Stock</strong><br><small style="color:#64748B">(estado en un punto)</small></td>
+          <td>Mide una condición en un momento específico</td>
+          <td>¿Cómo estamos hoy?</td>
+          <td>N.° de predios desactualizados a 31 de diciembre de 2024</td>
+        </tr>
+        <tr>
+          <td><strong>Flujo</strong><br><small style="color:#64748B">(cambio en un período)</small></td>
+          <td>Mide lo que ocurrió durante un intervalo definido</td>
+          <td>¿Qué avanzamos este período?</td>
+          <td>N.° de predios actualizados durante el año 2024</td>
+        </tr>
+        <tr>
+          <td><strong>Acumulado</strong></td>
+          <td>Suma de flujos desde un punto de partida definido hasta la fecha de corte</td>
+          <td>¿Cuánto llevamos desde que empezamos?</td>
+          <td>Predios actualizados acumulados desde el inicio del Plan de Desarrollo 2024–2027</td>
+        </tr>
+        <tr>
+          <td><strong>Tendencia</strong></td>
+          <td>Dirección y velocidad del cambio a lo largo de varios períodos consecutivos</td>
+          <td>¿Hacia dónde vamos?</td>
+          <td>Evolución trimestral del % de predios actualizados, 2020–2024</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="distincion">
+      Un sistema de indicadores robusto necesita los cuatro. El <strong>stock</strong> da contexto. El <strong>flujo</strong> mide el esfuerzo del período. El <strong>acumulado</strong> muestra el avance respecto a la meta total del plan. La <strong>tendencia</strong> revela si el ritmo es suficiente para llegar a la meta a tiempo.
+    </div>
+
+    <!-- CLASIFICACIÓN COMPLETA — EJEMPLO INTEGRADO -->
+    <h3>Aplicar las seis clasificaciones: un ejemplo integrado</h3>
+
+    <p>Tomando el indicador <em>"Número de predios con mutación tipo 1 registrados durante el primer semestre de 2025"</em>:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Criterio</th>
+          <th>Clasificación</th>
+          <th>Por qué</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nivel jerárquico</td>
+          <td>De gestión</td>
+          <td>Mide la operación de un proceso interno, no el resultado de la política</td>
+        </tr>
+        <tr>
+          <td>Naturaleza</td>
+          <td>Cuantitativo</td>
+          <td>Expresa una magnitud numérica contable directamente</td>
+        </tr>
+        <tr>
+          <td>Función</td>
+          <td>Seguimiento</td>
+          <td>Monitorea el avance de un proceso durante un período</td>
+        </tr>
+        <tr>
+          <td>Cadena de valor</td>
+          <td>Producto</td>
+          <td>Cuenta lo que se entregó, no el cambio que generó en los propietarios o el territorio</td>
+        </tr>
+        <tr>
+          <td>Forma de expresión</td>
+          <td>Valor absoluto</td>
+          <td>Es un conteo sin denominador</td>
+        </tr>
+        <tr>
+          <td>Temporalidad</td>
+          <td>Flujo</td>
+          <td>Mide lo que ocurrió durante el semestre, no una condición en un momento dado</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SECCIÓN 4 -->
+    <h2 id="s4">4. Ejercicio y autoevaluación</h2>
+
+    <h3>Tarea para esta sesión: completar la Sección 2 de la Plantilla</h3>
+
+    <p>Con base en el indicador que identificó en la Sesión 1, complete la Sección 2 de la Plantilla de Formulación de Indicadores respondiendo:</p>
+
+    <ol>
+      <li>¿Cómo clasifica su indicador según cada uno de los seis criterios vistos?</li>
+      <li>¿En qué eslabón de la cadena de valor se ubica: insumo, actividad, producto, resultado o impacto?</li>
+      <li>¿Existe una norma que le obligue a producir este indicador, o es una medición de gestión interna? ¿Cambia algo en su entidad según la respuesta?</li>
+      <li>¿La pregunta de gestión que quiere responder coincide con el tipo de indicador que está construyendo?</li>
+    </ol>
+
+    <h3>Autoevaluación individual</h3>
+
+    <p>Sin compartir en voz alta, responda estas tres preguntas sobre su indicador:</p>
+
+    <div class="ses-note">
+      <strong>Pregunta 1 —</strong> ¿El tipo de indicador que estoy construyendo responde a la decisión de gestión que identifiqué en la Sesión 1, o estoy midiendo una actividad cuando la pregunta es sobre un resultado?
+    </div>
+
+    <div class="ses-note">
+      <strong>Pregunta 2 —</strong> ¿Existe una norma que me obligue a producir este indicador, o es una medición de gestión interna? ¿Cambia algo en mi entidad según la respuesta?
+    </div>
+
+    <div class="ses-note">
+      <strong>Pregunta 3 —</strong> ¿La fuente de datos que tengo disponible me permite producir el indicador con el tipo y la periodicidad que necesito?
+    </div>
+
+    <h3>Ejercicio optativo — para preparar la Sesión 3</h3>
+
+    <p>Si quiere avanzar antes de la próxima sesión, identifique la fuente de datos disponible para su indicador:</p>
+
+    <ul>
+      <li>Nombre de la fuente y entidad responsable.</li>
+      <li>Frecuencia de actualización disponible.</li>
+      <li>Si es un registro administrativo o una operación estadística.</li>
+      <li>Si no existe fuente, una propuesta de cómo generarla.</li>
+    </ul>
+
+    <div class="alerta">
+      <strong>Anticipación de la Sesión 3 —</strong> En la próxima sesión construimos la fórmula, definimos numerador y denominador, identificamos la fuente de datos y redactamos la ficha técnica del indicador. La clasificación que completó hoy determina la fórmula que usaremos.
+    </div>
+
+    <!-- SECCIÓN 5 -->
+    <h2 id="s5">5. Bibliografía</h2>
+
+    <ul class="bib-list">
+      <li>
+        Congreso de Colombia. (2023). <em>Ley 2335 de 2023 — Marco general para la estadística oficial</em> (deroga Ley 79/1993).
+        <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=221910" target="_blank">[Ver norma]</a>
+      </li>
+      <li>
+        Congreso de Colombia. (1994). <em>Ley 152 de 1994 — Ley Orgánica del Plan de Desarrollo.</em>
+        <a href="https://www.suin-juriscol.gov.co/viewDocument.asp?ruta=Leyes/1651907" target="_blank">[Ver norma]</a>
+      </li>
+      <li>
+        Congreso de Colombia. (1997). <em>Ley 388 de 1997 — Ley de Desarrollo Territorial.</em> Art. 28 modificado por Decreto Ley 2106 de 2019.
+        <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=339" target="_blank">[Ver norma]</a>
+      </li>
+      <li>
+        Presidencia de la República de Colombia. (2004). <em>Decreto 262 de 2004 — Por el cual se modifica la estructura del DANE y se dictan otras disposiciones.</em>
+        <a href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=15118" target="_blank">[Ver norma]</a>
+      </li>
+      <li>
+        DANE. (2020). <em>Resolución 1118 de 2020 — Por la cual se adopta la Norma Técnica de la Calidad del Proceso Estadístico NTC PE 1000:2020.</em>
+        <a href="https://www.dane.gov.co/files/acerca/Normatividad/resoluciones/2020/Resolucion-1118-de-2020.pdf" target="_blank">[PDF]</a>
+      </li>
+      <li>
+        DANE / ICONTEC. (2020). <em>Norma Técnica de la Calidad del Proceso Estadístico NTC PE 1000:2020. Requisitos de calidad para la generación de estadísticas.</em>
+        <a href="https://www.dane.gov.co/files/sen/normatividad/NTC-Proceso-Estadistico-PE-1000-2020.pdf" target="_blank">[PDF]</a>
+      </li>
+      <li>
+        DANE. (2009). <em>Guía para diseño, construcción e interpretación de indicadores.</em> Dirección de Regulación, Planeación, Estandarización y Normalización (DIRPEN). Estrategia para el Fortalecimiento Estadístico Territorial.
+        <a href="https://www.dane.gov.co/files/planificacion/fortalecimiento/cuadernillo/Guia_construccion_interpretacion_indicadores.pdf" target="_blank">[PDF]</a>
+      </li>
+      <li>
+        Bonnefoy, J. C., &amp; Armijo, M. (2005). <em>Indicadores de desempeño en el sector público.</em> CEPAL/ILPES. Serie Manuales N.° 45. Símbolo ONU: LC/L.2416-P.
+        <a href="https://repositorio.cepal.org/handle/11362/5611" target="_blank">[PDF]</a>
+      </li>
+      <li>
+        Kusek, J. Z., &amp; Rist, R. C. (2004). <em>Ten Steps to a Results-Based Monitoring and Evaluation System: A Handbook for Development Practitioners.</em> Banco Mundial.
+        <a href="https://openknowledge.worldbank.org/entities/publication/84e1b3ba-74a2-5a19-a68d-a4b9632b74ad" target="_blank">[Ver]</a>
+      </li>
+      <li>
+        OCDE. (2002). <em>Glosario de los principales términos sobre evaluación y gestión basada en resultados.</em> DAC Network on Development Evaluation.
+      </li>
+      <li>
+        MinTIC. (s.f.). <em>Marco de Interoperabilidad para Gobierno Digital — Modelo de Madurez.</em> Ministerio de Tecnologías de la Información y las Comunicaciones de Colombia.
+        <a href="https://lenguaje.mintic.gov.co/marco-de-interoperabilidad" target="_blank">[Ver]</a>
+      </li>
+    </ul>
+
+  </main>
+</div>
+
+<script>
+// TOC activo según scroll
+(function(){
+  const sections = document.querySelectorAll('.content h2[id], .content h3[id]');
+  const links = document.querySelectorAll('.toc a');
+  function onScroll(){
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    links.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive: true});
+  onScroll();
+})();
+</script>
+
+</body>
+</html>
