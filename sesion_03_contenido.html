@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 3 — Contenido | Curso de indicadores IDECA</title>
+<style>
+:root {
+  --navy: #0E2841;
+  --yel:  #FFB001;
+  --red:  #CC1724;
+  --gold: #FDC23D;
+  --light: #F5F7FA;
+  --gray: #64748B;
+  --text: #1E293B;
+  --max: 820px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 15px;
+}
+.topbar {
+  background: var(--navy);
+  border-bottom: 3px solid var(--yel);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar a.back {
+  color: rgba(255,255,255,.55);
+  text-decoration: none;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color .15s;
+}
+.topbar a.back:hover { color: var(--yel); }
+.topbar-sep { color: rgba(255,255,255,.2); font-size: 16px; }
+.topbar-title { color: rgba(255,255,255,.7); font-size: 12px; font-weight: 600; letter-spacing: .3px; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+.btn-sm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all .15s;
+}
+.btn-pres { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.2); }
+.btn-pres:hover { background: rgba(255,255,255,.22); color: #fff; }
+.btn-pdf { background: var(--yel); color: #1a1000; border: 1px solid var(--gold); }
+.btn-pdf:hover { background: var(--gold); }
+.hero {
+  background: var(--navy);
+  padding: 40px 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 220px;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,176,1,.06) 30%);
+  pointer-events: none;
+}
+.hero-sup {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--yel);
+  margin-bottom: 11px;
+  opacity: .8;
+}
+.hero h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  max-width: 640px;
+  margin-bottom: 14px;
+}
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-tag {
+  background: rgba(255,255,255,.09);
+  color: rgba(255,255,255,.6);
+  font-size: 11px;
+  padding: 4px 11px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.12);
+}
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
+}
+.sidebar {
+  position: sticky;
+  top: 52px;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+  padding: 28px 0 28px 28px;
+  border-right: 1px solid #DDE4EE;
+  background: #fff;
+}
+.sidebar-title {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gray);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--yel);
+}
+.toc { list-style: none; }
+.toc li { margin-bottom: 2px; }
+.toc a {
+  display: block;
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 5px 10px 5px 0;
+  border-radius: 4px;
+  line-height: 1.4;
+  transition: all .12s;
+}
+.toc a:hover { color: var(--navy); background: var(--light); padding-left: 6px; }
+.toc a.active { color: var(--navy); font-weight: 700; border-left: 3px solid var(--yel); padding-left: 7px; }
+.toc .sub a { font-size: 11px; padding-left: 12px; color: #94A3B8; }
+.toc .sub a:hover { color: var(--navy); }
+.content { padding: 36px 44px 60px; min-width: 0; }
+.content h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-top: 44px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--yel);
+  scroll-margin-top: 72px;
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-top: 28px;
+  margin-bottom: 10px;
+  scroll-margin-top: 72px;
+}
+.content p { margin-bottom: 14px; color: var(--text); max-width: 680px; }
+.content ul, .content ol {
+  padding-left: 0;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 680px;
+}
+.content li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.content ul li::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--yel);
+  border: 1.5px solid var(--navy);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.content ol { counter-reset: li; }
+.content ol li { counter-increment: li; }
+.content ol li::before {
+  content: counter(li);
+  background: var(--navy);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.content blockquote {
+  border-left: 4px solid var(--yel);
+  background: #FFFBEB;
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 18px 0;
+  max-width: 680px;
+}
+.content blockquote p {
+  font-style: italic;
+  color: #78350F;
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.content blockquote p:last-child { margin: 0; }
+.content blockquote cite {
+  font-size: 11.5px;
+  color: #92400E;
+  font-style: normal;
+  display: block;
+  margin-top: 6px;
+}
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 13.5px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.content th {
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+.content td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #EEF2F8;
+  line-height: 1.5;
+  vertical-align: top;
+}
+.content tr:last-child td { border-bottom: none; }
+.content tr:nth-child(even) td { background: #F8FAFC; }
+.content td strong { color: var(--navy); }
+.ses-note {
+  background: #EEF4FF;
+  border-left: 4px solid var(--navy);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--navy);
+  margin: 18px 0;
+  max-width: 680px;
+}
+.alerta {
+  background: #FFF7ED;
+  border-left: 4px solid var(--red);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #7C2D12;
+  margin: 18px 0;
+  max-width: 680px;
+}
+.alerta strong { color: var(--red); }
+.distincion {
+  background: #F0FDF4;
+  border-left: 4px solid #16A34A;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 13.5px;
+  color: #14532D;
+  margin: 16px 0;
+  max-width: 680px;
+}
+.distincion strong { color: #15803D; }
+.criterios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 20px 0;
+  max-width: 680px;
+}
+.criterio {
+  background: #fff;
+  border: 1px solid #DDE4EE;
+  border-radius: 8px;
+  padding: 16px;
+  border-top: 4px solid var(--navy);
+}
+.criterio-num {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gray);
+  margin-bottom: 4px;
+}
+.criterio h4 {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.criterio p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.55;
+  margin: 0;
+  max-width: none;
+}
+.formula-box {
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin: 18px 0;
+  max-width: 680px;
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  color: #fff;
+  line-height: 2;
+}
+.formula-box .label {
+  font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--yel);
+  margin-bottom: 8px;
+  display: block;
+}
+.formula-box .hl { color: var(--yel); font-weight: 700; }
+.formula-box .dim { color: rgba(255,255,255,.4); }
+.ficha-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 13.5px;
+  max-width: 680px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ficha-table th {
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+.ficha-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #EEF2F8;
+  line-height: 1.55;
+  vertical-align: top;
+}
+.ficha-table tr:last-child td { border-bottom: none; }
+.ficha-table tr:nth-child(even) td { background: #F8FAFC; }
+.ficha-table td:first-child { font-weight: 700; color: var(--navy); width: 30%; }
+.bib-list { list-style: none !important; gap: 0 !important; }
+.bib-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #EEF2F8;
+  font-size: 13.5px;
+  line-height: 1.6;
+  gap: 0 !important;
+}
+.bib-list li::before { display: none !important; }
+.bib-list a {
+  color: var(--red);
+  text-decoration: none;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.bib-list a:hover { text-decoration: underline; }
+.fuente-tag {
+  display: inline-block;
+  background: #EEF4FF;
+  color: var(--navy);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  border: 1px solid #C7D7F5;
+}
+@media print {
+  .topbar, .sidebar, .topbar-actions { display: none; }
+  .layout { grid-template-columns: 1fr; }
+  .content { padding: 0 20px; }
+  body { background: #fff; font-size: 13px; }
+  .content h2 { page-break-after: avoid; margin-top: 28px; }
+  .content h3 { page-break-after: avoid; }
+  .content table, .ficha-table { page-break-inside: avoid; }
+  .content blockquote { page-break-inside: avoid; }
+  .criterios { grid-template-columns: 1fr 1fr; }
+  .hero { background: var(--navy) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 20px 32px; }
+  .hero h1 { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA SUPERIOR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a class="back" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      Volver al curso
+    </a>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-title">Sesión 3 — Contenido</span>
+  </div>
+  <div class="topbar-actions">
+    <a class="btn-sm btn-pres" href="sesion_03_presentacion.html" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      Ver presentación
+    </a>
+    <button class="btn-sm btn-pdf" onclick="window.print()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4"/><path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+      Descargar PDF
+    </button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-sup">Sesión 3 de 4 · IDECA · Curso de indicadores</div>
+  <h1>Diseño y documentación de indicadores</h1>
+  <div class="hero-meta">
+    <span class="hero-tag">Nombre · Definición operacional · Fórmula · Ficha técnica</span>
+    <span class="hero-tag">Metodología DANE–EFET</span>
+    <span class="hero-tag">1 hora · 2 ejercicios participativos</span>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR TOC -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="toc">
+      <li><a href="#s1">1. El nombre del indicador</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s1a">Convención DANE</a></li>
+        <li><a href="#s1b">Errores frecuentes</a></li>
+      </ul></li>
+      <li><a href="#s2">2. La definición operacional</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s2a">Qué especifica</a></li>
+        <li><a href="#s2b">Cómo redactarla</a></li>
+      </ul></li>
+      <li><a href="#s3">3. La fórmula</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s3a">Partes de la fórmula</a></li>
+        <li><a href="#s3b">Tipos por expresión</a></li>
+        <li><a href="#s3c">Errores frecuentes</a></li>
+      </ul></li>
+      <li><a href="#s4">4. La ficha técnica</a></li>
+      <li class="sub"><ul>
+        <li><a href="#s4a">Componentes DANE</a></li>
+        <li><a href="#s4b">Línea base y meta</a></li>
+        <li><a href="#s4c">Ejemplo integrado</a></li>
+      </ul></li>
+      <li><a href="#s5">5. Bibliografía</a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="content">
+
+    <div class="ses-note">
+      <strong>Hilo conductor —</strong> En las sesiones anteriores aprendimos qué es un indicador, para qué sirve y cómo clasificarlo. En esta sesión aprendemos a <strong>construirlo correctamente</strong>: darle un nombre preciso, definir exactamente qué mide, construir su fórmula sin errores y documentarlo en una ficha técnica completa.
+    </div>
+
+    <!-- SECCIÓN 1: EL NOMBRE -->
+    <h2 id="s1">1. El nombre del indicador</h2>
+
+    <p>El nombre de un indicador no es un título decorativo: es la expresión verbal más compacta y precisa de lo que se mide. Un nombre bien formulado comunica, sin necesidad de explicación adicional, qué se mide, en qué contexto, con qué unidad y con qué frecuencia.</p>
+
+    <h3 id="s1a">1.1 Convención DANE para la denominación</h3>
+
+    <p>La Guía para Diseño, Construcción e Interpretación de Indicadores del DANE (2009) establece que el nombre de un indicador debe seguir la estructura:</p>
+
+    <div class="formula-box">
+      <span class="label">Estructura DANE</span>
+      <span class="hl">[Tipo de medición]</span> de <span class="hl">[fenómeno]</span> en <span class="hl">[ámbito]</span> (<span class="hl">[unidad]</span>, <span class="hl">[periodicidad]</span>)
+    </div>
+
+    <p>Cada componente cumple una función específica:</p>
+
+    <ul>
+      <li><strong>Tipo de medición:</strong> indica cómo se expresa el resultado — tasa, porcentaje, razón, índice, número de, proporción de, etc.</li>
+      <li><strong>Fenómeno:</strong> describe exactamente qué se está midiendo, sin ambigüedades.</li>
+      <li><strong>Ámbito:</strong> delimita el territorio, la entidad, el sector o el grupo poblacional al que aplica.</li>
+      <li><strong>Unidad:</strong> la medida en que se expresa el resultado (%, unidades, pesos, toneladas, hectáreas…).</li>
+      <li><strong>Periodicidad:</strong> la frecuencia con que se produce la medición (anual, semestral, trimestral, mensual).</li>
+    </ul>
+
+    <p>Dos ejemplos aplicados al sector público colombiano:</p>
+
+    <blockquote>
+      <p>"Porcentaje de predios urbanos con información catastral actualizada en Bogotá (%, anual)"</p>
+      <cite>Tipo: porcentaje · Fenómeno: predios actualizados · Ámbito: Bogotá · Unidad: % · Periodicidad: anual</cite>
+    </blockquote>
+
+    <blockquote>
+      <p>"Tasa de cobertura neta en educación básica en Cundinamarca (%, anual)"</p>
+      <cite>Tipo: tasa · Fenómeno: cobertura educativa básica · Ámbito: Cundinamarca · Unidad: % · Periodicidad: anual</cite>
+    </blockquote>
+
+    <h3 id="s1b">1.2 Errores frecuentes en la denominación</h3>
+
+    <p>En la práctica, los nombres de indicadores mal formulados se agrupan en tres categorías:</p>
+
+    <table>
+      <thead>
+        <tr><th>Error</th><th>Ejemplo</th><th>Problema</th><th>Versión corregida</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Verbo en infinitivo</strong></td>
+          <td>"Incrementar la vacunación infantil"</td>
+          <td>Es un objetivo, no una medición. Los nombres no llevan verbos.</td>
+          <td>Porcentaje de niños de 0–5 años vacunados contra sarampión en el municipio X (%, anual)</td>
+        </tr>
+        <tr>
+          <td><strong>Nombre vago</strong></td>
+          <td>"Acceso a educación"</td>
+          <td>No indica tipo de medición, ámbito ni periodicidad.</td>
+          <td>Tasa de cobertura neta en educación básica en Bogotá (%, anual)</td>
+        </tr>
+        <tr>
+          <td><strong>Nombre incompleto</strong></td>
+          <td>"Viviendas conectadas"</td>
+          <td>¿A qué? ¿Cuántas? ¿Dónde? ¿Cuándo?</td>
+          <td>Porcentaje de viviendas con conexión al acueducto en la zona rural de Soacha (%, anual)</td>
+        </tr>
+        <tr>
+          <td><strong>Nombre ambiguo</strong></td>
+          <td>"Predios catastro"</td>
+          <td>¿Qué se mide de los predios? ¿Cuántos? ¿Cuál porcentaje? ¿De qué?</td>
+          <td>Porcentaje de predios urbanos con avalúo catastral actualizado en Bogotá (%, anual)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alerta">
+      <strong>Regla práctica:</strong> si al leer el nombre de un indicador necesitas preguntar "¿pero qué exactamente?", el nombre está mal formulado.
+    </div>
+
+    <!-- SECCIÓN 2: DEFINICIÓN OPERACIONAL -->
+    <h2 id="s2">2. La definición operacional</h2>
+
+    <p>El nombre comunica qué se mide. La definición operacional explica <em>cómo</em> se mide con toda precisión. Según la Guía DANE (2009), la definición operacional corresponde a la "explicación conceptual de cada uno de los términos utilizados en el indicador", y forma parte integral de la ficha técnica.</p>
+
+    <h3 id="s2a">2.1 Qué especifica la definición operacional</h3>
+
+    <p>Una definición operacional completa responde a las siguientes preguntas:</p>
+
+    <ul>
+      <li><strong>¿Quién?</strong> Delimita exactamente la población o el universo de análisis.</li>
+      <li><strong>¿Cuándo?</strong> Especifica el período de referencia (año calendario, año escolar, cuatrienio, etc.).</li>
+      <li><strong>¿Qué cuenta y qué excluye?</strong> Menciona explícitamente los casos que podrían generar confusión o doble conteo.</li>
+      <li><strong>¿Cómo se mide?</strong> Describe el procedimiento de recolección o registro de datos.</li>
+    </ul>
+
+    <p>La importancia de la definición se ilustra con el siguiente ejemplo. Sin ella, el indicador "Porcentaje de funcionarios capacitados" genera preguntas inmediatas: ¿cualquier capacitación o solo las obligatorias? ¿en el año o en toda su carrera? ¿se incluyen contratistas? ¿y quienes están en comisión de estudio? Dos analistas distintos, midiendo el mismo indicador sin definición, llegarán a cifras diferentes.</p>
+
+    <blockquote>
+      <p><strong>Con definición operacional:</strong> Porcentaje de funcionarios de planta, vinculados al corte del 31 de diciembre, que asistieron a al menos una actividad de capacitación ofrecida por la entidad durante el año calendario. No se incluyen contratistas ni funcionarios en comisión de estudio.</p>
+      <cite>Ejemplo elaborado por UAECD</cite>
+    </blockquote>
+
+    <h3 id="s2b">2.2 Cómo redactar la definición operacional</h3>
+
+    <p>Cuatro reglas básicas para redactar una buena definición operacional:</p>
+
+    <div class="criterios">
+      <div class="criterio">
+        <div class="criterio-num">Regla 1</div>
+        <h4>Delimita la población</h4>
+        <p>Especifica con precisión quiénes están incluidos y, si es necesario, quiénes quedan fuera.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Regla 2</div>
+        <h4>Especifica el período</h4>
+        <p>¿Año calendario (enero–diciembre)? ¿Año escolar? ¿Cuatrienio? El período debe ser inequívoco.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Regla 3</div>
+        <h4>Aclara inclusiones y exclusiones</h4>
+        <p>Menciona los casos límite que generan duda. Si no se mencionan, se asumirán incluidos.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Regla 4</div>
+        <h4>Coherencia con la fórmula</h4>
+        <p>Lo que dice la definición debe coincidir exactamente con lo que miden el numerador y el denominador.</p>
+      </div>
+    </div>
+
+    <p>Ejemplo completo aplicado al Programa de Alimentación Escolar (PAE):</p>
+
+    <blockquote>
+      <p><strong>Indicador:</strong> Porcentaje de estudiantes beneficiarios del PAE que reciben ración diaria en Bogotá (%, anual)</p>
+      <p><strong>Definición operacional:</strong> Estudiante matriculado en colegio oficial de Bogotá que recibió al menos una ración (desayuno o almuerzo) por cada día hábil del período escolar. Se excluyen los días de paro, eventos escolares y vacaciones. No se incluyen colegios privados. La fuente es el registro diario de entregas del operador PAE reportado al SIMAT.</p>
+      <cite>Ejemplo elaborado por UAECD con base en lineamientos DANE (2009)</cite>
+    </blockquote>
+
+    <!-- SECCIÓN 3: LA FÓRMULA -->
+    <h2 id="s3">3. La fórmula</h2>
+
+    <p>La fórmula es la expresión matemática que permite calcular el valor del indicador a partir de los datos disponibles. Según la Guía DANE (2009, sec. 3.4.5), la fórmula debe presentarse "con siglas claras y que, en lo posible, den cuenta del nombre de cada variable".</p>
+
+    <h3 id="s3a">3.1 Partes de la fórmula</h3>
+
+    <p>La fórmula general de un indicador tiene tres partes:</p>
+
+    <div class="formula-box">
+      <span class="label">Estructura general</span>
+      Indicador = <span class="hl">Numerador</span> / <span class="hl">Denominador</span> × <span class="hl">k</span>
+    </div>
+
+    <ul>
+      <li><strong>Numerador:</strong> el subconjunto de interés — los casos, eventos o personas <em>que tienen</em> la característica que se quiere medir.</li>
+      <li><strong>Denominador:</strong> el universo de referencia total. En un porcentaje, el denominador siempre debe ser mayor o igual al numerador (el numerador es subconjunto del denominador).</li>
+      <li><strong>Constante k:</strong> 100 para porcentajes; 1.000 o 100.000 en tasas demográficas o epidemiológicas; 1 en razones (sin constante).</li>
+    </ul>
+
+    <p>El DANE ilustra este principio con la Tasa Específica de Fecundidad por Edad (TEFE), incluida como ejemplo en el Anexo de la Guía (2009):</p>
+
+    <div class="formula-box">
+      <span class="label">Ejemplo DANE — Tasa Específica de Fecundidad por Edad</span>
+      TEFE<span class="dim">i</span> = NHV<span class="dim">i</span> / NMi<span class="dim">i</span> × <span class="hl">1 000</span><br>
+      <span class="dim">NHVi: N.º de hijos nacidos vivos de mujeres en rango de edad i</span><br>
+      <span class="dim">NMii: N.º de mujeres en ese mismo rango de edad i</span>
+    </div>
+
+    <h3 id="s3b">3.2 Tipos de fórmulas según su forma de expresión</h3>
+
+    <p>La clasificación por forma de expresión (retomada de la Sesión 2) permite elegir la fórmula más adecuada según lo que se quiere comunicar:</p>
+
+    <table>
+      <thead>
+        <tr><th>Tipo</th><th>Estructura</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Porcentaje</strong></td>
+          <td>(Parte / Total) × 100</td>
+          <td>% de predios actualizados = (predios actualizados / total predios) × 100</td>
+        </tr>
+        <tr>
+          <td><strong>Tasa</strong></td>
+          <td>(Casos / Población) × k</td>
+          <td>Tasa de mortalidad infantil = (muertes &lt; 1 año / nacidos vivos) × 1.000</td>
+        </tr>
+        <tr>
+          <td><strong>Razón</strong></td>
+          <td>A / B (sin constante)</td>
+          <td>Razón alumno-docente = N.º alumnos / N.º docentes</td>
+        </tr>
+        <tr>
+          <td><strong>Índice</strong></td>
+          <td>Relación compuesta o estandarizada</td>
+          <td>IDH = f(esperanza de vida, educación, ingreso) — metodología PNUD</td>
+        </tr>
+        <tr>
+          <td><strong>Valor absoluto</strong></td>
+          <td>Conteo directo</td>
+          <td>N.º de trámites catastrales radicados en el semestre</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ses-note">
+      Los <strong>porcentajes y tasas</strong> permiten comparar entre entidades o períodos de tamaño distinto. Los <strong>valores absolutos</strong> no son comparables cuando el universo de referencia cambia. Siempre que sea posible, prefiera un indicador relativo.
+    </div>
+
+    <h3 id="s3c">3.3 Errores frecuentes en la construcción de la fórmula</h3>
+
+    <p>La Guía DANE (2009, sec. 4.1) dedica una sección específica al análisis de las variables en el numerador y el denominador. Algunos errores aplican a todos los tipos de fórmula; otros son específicos de los porcentajes y proporciones:</p>
+
+    <table>
+      <thead>
+        <tr><th>Error</th><th>Aplica a</th><th>Descripción y ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Error 1</strong><br>Unidades incompatibles cuando se busca una proporción</td>
+          <td>Porcentajes y proporciones</td>
+          <td>(N.º de capacitaciones / N.º de funcionarios) × 100 → eventos divididos entre personas no produce una cobertura. <em>Nota: en una razón sí es válido dividir categorías distintas, por ejemplo alumnos/docente.</em></td>
+        </tr>
+        <tr>
+          <td><strong>Error 2</strong><br>Numerador no es subconjunto del denominador</td>
+          <td>Solo porcentajes y proporciones</td>
+          <td>En un porcentaje el numerador siempre debe ser parte del universo del denominador. Esta regla <strong>no aplica</strong> a razones (alumnos/docente) ni a tasas demográficas (nacimientos/población total).</td>
+        </tr>
+        <tr>
+          <td><strong>Error 3</strong><br>Denominador puede ser cero</td>
+          <td>Todos los tipos</td>
+          <td>Si en algún período no hay observaciones en el denominador, la fórmula produce una división indefinida. Debe advertirse en el campo "Limitaciones" de la ficha técnica.</td>
+        </tr>
+        <tr>
+          <td><strong>Error 4</strong><br>Período de referencia distinto entre numerador y denominador</td>
+          <td>Todos los tipos</td>
+          <td>Numerador del año en curso sobre denominador de un censo anterior sin ajuste poblacional → los resultados no son comparables ni interpretables con coherencia temporal.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="distincion">
+      <strong>Para razones y tasas:</strong> en estos tipos de fórmula el numerador <em>no</em> necesita ser subconjunto del denominador — es precisamente su característica. Lo que sí debe cuidarse en todos los casos es que el período de referencia sea el mismo para ambas variables y que el denominador nunca pueda valer cero.
+    </div>
+
+    <p><strong>Ejemplo de Error 1:</strong> el indicador "Porcentaje de funcionarios capacitados" con la fórmula <em>(N.º de capacitaciones / N.º de funcionarios) × 100</em> mezcla eventos con personas. Un funcionario puede asistir a diez capacitaciones, lo que haría superar el 100%, un resultado sin sentido para un indicador de cobertura. La fórmula correcta es: <em>(N.º de funcionarios que asistieron a ≥ 1 capacitación / N.º de funcionarios totales) × 100</em>.</p>
+
+    <!-- SECCIÓN 4: LA FICHA TÉCNICA -->
+    <h2 id="s4">4. La ficha técnica</h2>
+
+    <p>La ficha técnica —también llamada metadato— es el instrumento de documentación que reúne todos los elementos del indicador en un formato estandarizado. Su propósito es garantizar que cualquier usuario pueda entender, calcular, interpretar y reproducir el indicador sin necesidad de recurrir al autor original.</p>
+
+    <h3 id="s4a">4.1 Componentes oficiales según la Guía DANE</h3>
+
+    <p>La Guía DANE para Diseño, Construcción e Interpretación de Indicadores (2009, sec. 3.4.5) establece nueve componentes para la ficha técnica:</p>
+
+    <div class="criterios">
+      <div class="criterio">
+        <div class="criterio-num">Componente 1</div>
+        <h4>Nombre</h4>
+        <p>Expresión verbal precisa que identifica el indicador, siguiendo la convención DANE descrita en la Sección 1.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Componente 2</div>
+        <h4>Objetivo</h4>
+        <p>Propósito que se persigue con la medición: describe la naturaleza y finalidad del indicador.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Componente 3</div>
+        <h4>Definición y conceptos</h4>
+        <p>Explicación conceptual de cada uno de los términos utilizados en el indicador (definición operacional).</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Componente 4</div>
+        <h4>Método de medición / Fórmula</h4>
+        <p>Explicación técnica del proceso de obtención de datos y la expresión matemática del indicador.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Componente 5</div>
+        <h4>Unidad de medida</h4>
+        <p>La magnitud en que se expresa el indicador: %, unidades, pesos, hectáreas, toneladas, etc.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Componente 6</div>
+        <h4>Fuente de datos</h4>
+        <p>Entidad y operación estadística que produce la información base del indicador.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Componente 7</div>
+        <h4>Periodicidad</h4>
+        <p>Frecuencia de medición: anual, semestral, trimestral, mensual, etc.</p>
+      </div>
+      <div class="criterio">
+        <div class="criterio-num">Componente 8</div>
+        <h4>Responsable</h4>
+        <p>Entidad y dependencia que tendrá a cargo la elaboración y actualización del indicador.</p>
+      </div>
+      <div class="criterio" style="border-top-color:var(--yel);grid-column:1/-1">
+        <div class="criterio-num">Componente 9</div>
+        <h4>Observaciones / Limitaciones</h4>
+        <p>Lo que el indicador <em>no</em> mide. Reflexiones y recomendaciones para la interpretación. Bibliografía de referencia.</p>
+      </div>
+    </div>
+
+    <h3 id="s4b">4.2 Línea base, meta y umbral de alerta</h3>
+
+    <p>En contextos de seguimiento y evaluación de políticas y planes de desarrollo, la ficha técnica suele complementarse con tres elementos adicionales:</p>
+
+    <ul>
+      <li><strong>Línea base (t₀):</strong> valor del indicador al inicio del período de evaluación. Es el punto de comparación para todos los resultados posteriores.</li>
+      <li><strong>Meta (t₁):</strong> valor comprometido al cierre del período. Debe cumplir los criterios SMART: específica, medible, alcanzable, relevante y con fecha definida.</li>
+      <li><strong>Umbral de alerta (opcional):</strong> valor que, si se alcanza, activa una revisión o intervención. No es componente obligatorio de la Guía DANE, pero es útil en sistemas de alerta temprana y tableros de control institucional.</li>
+    </ul>
+
+    <blockquote>
+      <p><strong>Ejemplo:</strong> Porcentaje de predios urbanos con información catastral actualizada en Bogotá</p>
+      <p>Línea base: <strong>68%</strong> (2022) · Meta: <strong>85%</strong> (2025) · Umbral de alerta: &lt; 72%</p>
+      <cite>Ejemplo elaborado por UAECD</cite>
+    </blockquote>
+
+    <h3 id="s4c">4.3 Ejemplo integrado — Ficha técnica completa</h3>
+
+    <p>El siguiente ejemplo muestra una ficha técnica completa para el Programa de Alimentación Escolar (PAE) en Bogotá, construida siguiendo los nueve componentes DANE más los elementos de seguimiento:</p>
+
+    <table class="ficha-table">
+      <thead>
+        <tr><th>Componente</th><th>Contenido</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nombre</td>
+          <td>Porcentaje de estudiantes beneficiarios del PAE que reciben ración diaria en Bogotá (%, anual)</td>
+        </tr>
+        <tr>
+          <td>Objetivo</td>
+          <td>Monitorear la cobertura efectiva de la alimentación escolar en colegios oficiales del Distrito Capital, identificando brechas entre la matrícula de beneficiarios y la entrega efectiva de raciones.</td>
+        </tr>
+        <tr>
+          <td>Definición y conceptos</td>
+          <td>Estudiante matriculado en colegio oficial de Bogotá que recibió al menos una ración (desayuno o almuerzo) por cada día hábil del período escolar. Se excluyen días de paro, eventos escolares y vacaciones. No se incluyen colegios privados.</td>
+        </tr>
+        <tr>
+          <td>Fórmula</td>
+          <td>(N.º de estudiantes con ración diaria / N.º total de estudiantes beneficiarios del PAE matriculados) × 100</td>
+        </tr>
+        <tr>
+          <td>Unidad de medida</td>
+          <td>Porcentaje (%)</td>
+        </tr>
+        <tr>
+          <td>Fuente de datos</td>
+          <td>SIMAT (Sistema de Matrícula Estudiantil) · Secretaría de Educación de Bogotá · Registros diarios de entregas del operador PAE</td>
+        </tr>
+        <tr>
+          <td>Periodicidad</td>
+          <td>Anual</td>
+        </tr>
+        <tr>
+          <td>Responsable</td>
+          <td>Secretaría de Educación de Bogotá — Dirección de Bienestar Estudiantil</td>
+        </tr>
+        <tr>
+          <td>Línea base / Meta</td>
+          <td>Línea base: 78% (2022) · Meta: 95% (2025)</td>
+        </tr>
+        <tr>
+          <td>Observaciones / Limitaciones</td>
+          <td>El indicador no refleja la calidad nutricional de las raciones entregadas. Puede subestimar la cobertura real si existen inconsistencias en los registros diarios del operador PAE. La fuente SIMAT puede presentar rezagos en la actualización de la matrícula.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="distincion">
+      <strong>Para recordar:</strong> una ficha técnica bien redactada garantiza que el indicador pueda ser medido de manera consistente por cualquier persona, en cualquier momento futuro, sin necesidad de consultar al autor original. La reproducibilidad es la prueba máxima de su calidad.
+    </div>
+
+    <!-- SECCIÓN 5: BIBLIOGRAFÍA -->
+    <h2 id="s5">5. Bibliografía</h2>
+
+    <ul class="bib-list">
+      <li>
+        Departamento Administrativo Nacional de Estadística (DANE). (2009). <em>Guía para diseño, construcción e interpretación de indicadores. Estrategia para el Fortalecimiento Estadístico Territorial (EFET)</em>. Dirección de Regulación, Planeación, Estandarización y Normalización (DIRPEN).
+        <a href="https://www.dane.gov.co/files/planificacion/fortalecimiento/cuadernillo/Guia_construccion_interpretacion_indicadores.pdf" target="_blank" rel="noopener">Documento completo →</a>
+      </li>
+      <li>
+        Bonnefoy, J. C. y Armijo, M. (2005). <em>Indicadores de desempeño en el sector público</em>. Instituto Latinoamericano y del Caribe de Planificación Económica y Social (ILPES) — CEPAL. Serie Manuales, N.º 45.
+        <a href="https://repositorio.cepal.org/handle/11362/5611" target="_blank" rel="noopener">Repositorio CEPAL →</a>
+      </li>
+      <li>
+        DANE. (2020). <em>NTC PE 1000:2020 — Norma Técnica de Calidad del Proceso Estadístico</em>. Resolución DANE N.º 1118 de 2020.
+        <a href="https://www.dane.gov.co/files/sen/normatividad/NTC-Proceso-Estadistico-PE-1000-2020.pdf" target="_blank" rel="noopener">Norma completa →</a>
+      </li>
+    </ul>
+
+  </main>
+</div>
+
+<script>
+// Active TOC link on scroll
+const headings = document.querySelectorAll('.content h2, .content h3');
+const links = document.querySelectorAll('.toc a');
+function onScroll() {
+  let cur = '';
+  headings.forEach(h => {
+    if (window.scrollY >= h.offsetTop - 80) cur = h.id;
+  });
+  links.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+</script>
+</body>
+</html>

@@ -265,6 +265,12 @@ main { max-width: 1040px; margin: 0 auto; padding: 44px 24px 60px; }
   border: 1.5px solid var(--yel);
 }
 .btn-pdf:hover { background: #FFE9B8; }
+.btn-excel {
+  background: #F0FDF4;
+  color: #166534;
+  border: 1.5px solid #86EFAC;
+}
+.btn-excel:hover { background: #DCFCE7; }
 .btn-disabled {
   background: #F1F5F9;
   color: #94A3B8;
@@ -407,24 +413,40 @@ footer {
       </div>
 
       <!-- SESIÓN 3 -->
-      <div class="ses-card pending">
+      <div class="ses-card">
         <div class="ses-num">
           <div class="n">3</div>
           <div class="lbl">Sesión</div>
         </div>
         <div class="ses-body">
-          <div class="ses-sub">Construcción</div>
-          <h3>Construcción de indicadores y línea base</h3>
-          <p>Las cuatro etapas metodológicas del DANE aplicadas a casos reales: identificación de variables, recolección y verificación de datos, selección y formulación del indicador, y elaboración de la ficha técnica.</p>
+          <div class="ses-sub">Diseño</div>
+          <h3>Diseño del indicador: nombre, fórmula y ficha técnica</h3>
+          <p>Estructura DANE-EFET para nombrar indicadores, definición operacional, construcción de la fórmula (numerador, denominador y constante), errores frecuentes según el tipo de medición, y los nueve componentes obligatorios de la ficha técnica.</p>
           <div class="topics">
-            <span class="topic-tag">4 etapas DANE</span>
-            <span class="topic-tag">Selección de variables</span>
-            <span class="topic-tag">Línea base</span>
-            <span class="topic-tag">Ficha técnica</span>
+            <span class="topic-tag">Nomenclatura DANE-EFET</span>
+            <span class="topic-tag">Definición operacional</span>
+            <span class="topic-tag">Fórmula: N / D × k</span>
+            <span class="topic-tag">Errores frecuentes</span>
+            <span class="topic-tag">Ficha técnica (9 componentes)</span>
           </div>
         </div>
         <div class="ses-actions">
-          <span class="btn btn-disabled">Próximamente</span>
+          <a class="btn btn-navy" href="sesion_03_presentacion.html" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Ver presentación
+          </a>
+          <a class="btn btn-pdf" href="sesion_03_presentacion.html?pdf=1" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4"/><path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21H19.44a2 2 0 0 0 1.94-1.515L22 17"/></svg>
+            Exportar PDF
+          </a>
+          <a class="btn btn-outline" href="sesion_03_contenido.html" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Contenido sesión
+          </a>
+          <a class="btn btn-excel" href="Plantilla_Formulacion_Indicadores.xlsx" download>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 15V3m0 12-4-4m4 4 4-4"/><rect x="2" y="17" width="20" height="4" rx="1"/></svg>
+            Descargar plantilla
+          </a>
         </div>
       </div>
 
