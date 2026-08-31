@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 4 — Contenido | Curso de indicadores IDECA</title>
+<style>
+:root {
+  --navy: #0E2841;
+  --yel:  #FFB001;
+  --red:  #CC1724;
+  --gold: #FDC23D;
+  --light: #F5F7FA;
+  --gray: #64748B;
+  --text: #1E293B;
+  --max: 820px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 15px;
+}
+
+/* BARRA SUPERIOR */
+.topbar {
+  background: var(--navy);
+  border-bottom: 3px solid var(--yel);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar a.back {
+  color: rgba(255,255,255,.55);
+  text-decoration: none;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color .15s;
+}
+.topbar a.back:hover { color: var(--yel); }
+.topbar-sep { color: rgba(255,255,255,.2); font-size: 16px; }
+.topbar-title { color: rgba(255,255,255,.7); font-size: 12px; font-weight: 600; letter-spacing: .3px; }
+.topbar-actions { display: flex; align-items: center; gap: 8px; }
+.btn-sm {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 13px; border-radius: 5px;
+  font-size: 11.5px; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  border: none; transition: all .15s;
+}
+.btn-pres { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.2); }
+.btn-pres:hover { background: rgba(255,255,255,.22); color: #fff; }
+.btn-pdf { background: var(--yel); color: #1a1000; border: 1px solid var(--gold); }
+.btn-pdf:hover { background: var(--gold); }
+
+/* HERO */
+.hero {
+  background: var(--navy);
+  padding: 40px 32px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0; width: 220px;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,176,1,.06) 30%);
+  pointer-events: none;
+}
+.hero-sup {
+  font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; color: var(--yel); margin-bottom: 11px; opacity: .8;
+}
+.hero h1 {
+  font-size: 24px; font-weight: 800; color: #fff;
+  line-height: 1.25; max-width: 640px; margin-bottom: 14px;
+}
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-tag {
+  background: rgba(255,255,255,.09); color: rgba(255,255,255,.6);
+  font-size: 11px; padding: 4px 11px; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+/* LAYOUT */
+.layout {
+  display: grid; grid-template-columns: 220px 1fr;
+  gap: 0; max-width: 1100px; margin: 0 auto; align-items: start;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: sticky; top: 52px;
+  height: calc(100vh - 52px); overflow-y: auto;
+  padding: 28px 0 28px 28px;
+  border-right: 1px solid #DDE4EE; background: #fff;
+}
+.sidebar-title {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--gray); margin-bottom: 14px;
+  padding-bottom: 8px; border-bottom: 2px solid var(--yel);
+}
+.toc { list-style: none; }
+.toc li { margin-bottom: 2px; }
+.toc a {
+  display: block; color: var(--gray); text-decoration: none;
+  font-size: 12px; padding: 5px 10px 5px 0;
+  border-radius: 4px; line-height: 1.4; transition: all .12s;
+}
+.toc a:hover { color: var(--navy); background: var(--light); padding-left: 6px; }
+.toc a.active { color: var(--navy); font-weight: 700; border-left: 3px solid var(--yel); padding-left: 7px; }
+.toc .sub a { font-size: 11px; padding-left: 12px; color: #94A3B8; }
+.toc .sub a:hover { color: var(--navy); }
+
+/* CONTENIDO */
+.content { padding: 36px 44px 60px; min-width: 0; }
+
+/* TIPOGRAFÍA */
+.content h2 {
+  font-size: 20px; font-weight: 800; color: var(--navy);
+  margin-top: 44px; margin-bottom: 16px;
+  padding-bottom: 10px; border-bottom: 3px solid var(--yel);
+  scroll-margin-top: 72px;
+}
+.content h2:first-child { margin-top: 0; }
+.content h3 {
+  font-size: 15px; font-weight: 700; color: var(--navy);
+  margin-top: 28px; margin-bottom: 10px; scroll-margin-top: 72px;
+}
+.content p { margin-bottom: 14px; color: var(--text); max-width: 680px; }
+.content ul, .content ol {
+  padding-left: 0; margin-bottom: 16px;
+  display: flex; flex-direction: column; gap: 7px; max-width: 680px;
+}
+.content li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; line-height: 1.6; }
+.content ul li::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--yel); border: 1.5px solid var(--navy);
+  flex-shrink: 0; margin-top: 6px;
+}
+.content ol { counter-reset: li; }
+.content ol li { counter-increment: li; }
+.content ol li::before {
+  content: counter(li); background: var(--navy); color: #fff;
+  font-size: 10px; font-weight: 700; min-width: 22px; height: 22px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+
+/* BLOCKQUOTE */
+.content blockquote {
+  border-left: 4px solid var(--yel); background: #FFFBEB;
+  border-radius: 0 8px 8px 0; padding: 14px 18px;
+  margin: 18px 0; max-width: 680px;
+}
+.content blockquote p { font-style: italic; color: #78350F; margin: 0 0 6px; font-size: 14px; line-height: 1.65; }
+.content blockquote p:last-child { margin: 0; }
+.content blockquote cite { font-size: 11.5px; color: #92400E; font-style: normal; display: block; margin-top: 6px; }
+
+/* TABLAS */
+.content table {
+  width: 100%; border-collapse: collapse; margin: 18px 0;
+  font-size: 13.5px; box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  border-radius: 8px; overflow: hidden;
+}
+.content th {
+  background: var(--navy); color: #fff; padding: 10px 14px;
+  text-align: left; font-size: 12px; font-weight: 600; letter-spacing: .3px;
+}
+.content td {
+  padding: 9px 14px; border-bottom: 1px solid #EEF2F8;
+  line-height: 1.5; vertical-align: top;
+}
+.content tr:last-child td { border-bottom: none; }
+.content tr:nth-child(even) td { background: #F8FAFC; }
+.content td strong { color: var(--navy); }
+
+/* NOTA SESIÓN */
+.ses-note {
+  background: #EEF4FF; border-left: 4px solid var(--navy);
+  border-radius: 0 8px 8px 0; padding: 12px 16px;
+  font-size: 13px; color: var(--navy); margin: 18px 0; max-width: 680px;
+}
+
+/* ALERTA */
+.alerta {
+  background: #FFF7ED; border-left: 4px solid var(--red);
+  border-radius: 0 8px 8px 0; padding: 12px 16px;
+  font-size: 13.5px; color: #7C2D12; margin: 18px 0; max-width: 680px;
+}
+.alerta strong { color: var(--red); }
+
+/* CARDS DE REFERENTE */
+.referentes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 22px 0; max-width: 720px; }
+.ref-card {
+  background: #fff; border-radius: 10px; padding: 18px;
+  border: 1px solid #DDE4EE; border-top: 4px solid var(--navy);
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.ref-card.red  { border-top-color: var(--red); }
+.ref-card.yel  { border-top-color: var(--yel); }
+.ref-card.green { border-top-color: #16A34A; }
+.ref-num {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--gray); margin-bottom: 4px;
+}
+.ref-card h4 { font-size: 14px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+.ref-pregunta {
+  font-size: 12px; font-weight: 700; color: var(--yel);
+  background: var(--navy); display: inline-block;
+  padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+}
+.ref-card p { font-size: 13px; color: var(--gray); line-height: 1.55; margin: 0 0 8px; max-width: none; }
+.ref-trampa {
+  font-size: 12px; color: #7C2D12; background: #FFF7ED;
+  border-radius: 5px; padding: 7px 10px; margin-top: 8px;
+  border-left: 3px solid var(--red);
+}
+.ref-trampa strong { color: var(--red); }
+
+/* TARJETA DE INDICADOR */
+.ind-card {
+  background: var(--navy); border-radius: 10px; padding: 20px 24px;
+  max-width: 380px; margin: 20px 0; color: #fff; font-family: 'Segoe UI', sans-serif;
+}
+.ind-card-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+.ind-card-value { font-size: 48px; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 10px; }
+.ind-card-value span { font-size: 22px; color: rgba(255,255,255,.6); }
+.ind-card-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.ind-card-meta { font-size: 12px; color: rgba(255,255,255,.6); }
+.ind-card-delta { font-size: 12px; font-weight: 700; color: #4ADE80; }
+.ind-bar { height: 7px; border-radius: 4px; background: rgba(255,255,255,.15); margin: 10px 0; overflow: hidden; }
+.ind-bar-fill { height: 100%; border-radius: 4px; background: var(--yel); }
+.ind-semaforo {
+  display: inline-block; padding: 3px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px;
+}
+.semaforo-yel { background: rgba(255,176,1,.25); color: var(--yel); }
+.semaforo-green { background: rgba(74,222,128,.2); color: #4ADE80; }
+.semaforo-red { background: rgba(248,113,113,.2); color: #F87171; }
+.ind-card-footer { font-size: 10px; color: rgba(255,255,255,.35); margin-top: 10px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 8px; }
+
+/* SEMÁFORO */
+.semaforo-table { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; max-width: 620px; }
+.sem-row {
+  display: flex; align-items: stretch; border-radius: 8px;
+  overflow: hidden; border: 1px solid #DDE4EE;
+}
+.sem-color { width: 12px; flex-shrink: 0; }
+.sem-color.verde { background: #16A34A; }
+.sem-color.amarillo { background: #CA8A04; }
+.sem-color.rojo { background: var(--red); }
+.sem-body { padding: 12px 16px; flex: 1; background: #fff; }
+.sem-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 3px; }
+.sem-titulo.verde { color: #16A34A; }
+.sem-titulo.amarillo { color: #CA8A04; }
+.sem-titulo.rojo { color: var(--red); }
+.sem-desc { font-size: 13px; color: var(--text); }
+.sem-accion { font-size: 12px; color: var(--gray); margin-top: 3px; }
+
+/* PRINCIPIOS DASHBOARD */
+.principios { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; max-width: 680px; }
+.principio {
+  background: #fff; border-radius: 8px; padding: 16px 18px;
+  border: 1px solid #DDE4EE; display: flex; gap: 16px; align-items: flex-start;
+}
+.principio-num {
+  background: var(--navy); color: #fff; font-size: 14px; font-weight: 800;
+  min-width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.principio h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+.principio p { font-size: 13px; color: var(--gray); line-height: 1.55; margin: 0; max-width: none; }
+
+/* ERRORES */
+.errores { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; max-width: 680px; }
+.error-item {
+  background: #fff; border-radius: 8px; padding: 14px 16px;
+  border: 1px solid #DDE4EE; border-left: 4px solid var(--red);
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.error-n {
+  background: var(--red); color: #fff; font-size: 12px; font-weight: 800;
+  min-width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.error-item h4 { font-size: 13.5px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+.error-item p { font-size: 13px; color: var(--gray); line-height: 1.5; margin: 0; max-width: none; }
+.error-regla { font-size: 12px; color: var(--navy); font-weight: 600; margin-top: 5px; }
+
+/* FÓRMULA COMUNICACIÓN */
+.formula-com {
+  background: #fff; border-radius: 10px; border: 1px solid #DDE4EE;
+  overflow: hidden; margin: 20px 0; max-width: 680px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.formula-com-row {
+  display: grid; grid-template-columns: 140px 1fr;
+  border-bottom: 1px solid #EEF2F8;
+}
+.formula-com-row:last-child { border-bottom: none; }
+.formula-com-label {
+  background: var(--navy); color: var(--yel);
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; padding: 12px 14px;
+  display: flex; align-items: center;
+}
+.formula-com-val { padding: 12px 16px; font-size: 13.5px; line-height: 1.5; }
+
+/* HOJA DE RUTA */
+.roadmap { display: flex; flex-direction: column; gap: 0; margin: 20px 0; max-width: 620px; }
+.roadmap-step {
+  display: flex; gap: 18px; align-items: flex-start; position: relative; padding-bottom: 22px;
+}
+.roadmap-step:last-child { padding-bottom: 0; }
+.roadmap-step::before {
+  content: ''; position: absolute; left: 17px; top: 38px;
+  bottom: 0; width: 2px; background: #DDE4EE;
+}
+.roadmap-step:last-child::before { display: none; }
+.roadmap-n {
+  background: var(--navy); color: var(--yel); font-size: 14px; font-weight: 900;
+  min-width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1;
+}
+.roadmap-body h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+.roadmap-body p { font-size: 13px; color: var(--gray); line-height: 1.55; margin: 0; max-width: none; }
+
+/* EJERCICIO PLACEHOLDER */
+.ejercicio-box {
+  background: #F0F9FF; border: 2px dashed #0284C7; border-radius: 10px;
+  padding: 28px; margin: 20px 0; max-width: 680px; text-align: center;
+}
+.ejercicio-box h4 { font-size: 15px; font-weight: 700; color: #0369A1; margin-bottom: 8px; }
+.ejercicio-box p { font-size: 13px; color: #0369A1; margin: 0; max-width: none; }
+
+/* CASOS PRÁCTICA */
+.casos { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; max-width: 700px; }
+.caso {
+  background: #fff; border-radius: 9px; border: 1px solid #DDE4EE;
+  overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.05);
+}
+.caso-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; background: #F8FAFC; border-bottom: 1px solid #EEF2F8;
+}
+.caso-badge {
+  background: var(--navy); color: #fff; font-size: 10px;
+  font-weight: 700; padding: 3px 9px; border-radius: 20px;
+  white-space: nowrap;
+}
+.caso-header span { font-size: 13px; font-weight: 600; color: var(--navy); }
+.caso-body { padding: 14px 16px; }
+.caso-body p { font-size: 13.5px; color: var(--text); margin: 0 0 8px; max-width: none; }
+.caso-respuesta { font-size: 13px; color: #1A6B38; background: #F0FDF4; border-left: 3px solid #16A34A; border-radius: 0 6px 6px 0; padding: 8px 12px; margin-top: 8px; }
+.caso-respuesta strong { color: #16A34A; }
+
+/* GRÁFICO TABLE */
+.grafico-table { max-width: 720px; }
+
+/* CITAS */
+.cita {
+  font-size: 12px;
+  color: var(--gray);
+  font-style: normal;
+  vertical-align: baseline;
+}
+.fuente-tag {
+  display: inline-block;
+  background: #EEF4FF;
+  color: var(--navy);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  border: 1px solid #C7D7F5;
+}
+
+/* PRINT */
+@media print {
+  .topbar, .sidebar { display: none; }
+  .layout { display: block; }
+  .content { padding: 20px; }
+  .hero { padding: 20px; }
+  body { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back">&#8592; Inicio</a>
+    <span class="topbar-sep">/</span>
+    <span class="topbar-title">Sesión 4 — Interpretación y visualización</span>
+  </div>
+  <div class="topbar-actions">
+    <a href="sesion_04_presentacion.html" class="btn-sm btn-pres">Ver presentación</a>
+    <button class="btn-sm btn-pdf" onclick="window.print()">Exportar PDF</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-sup">Curso de indicadores IDECA · Sesión 4 de 4</div>
+  <h1>Interpretación, visualización<br>y comunicación de resultados</h1>
+  <div class="hero-meta">
+    <span class="hero-tag">90 minutos</span>
+    <span class="hero-tag">Metodología DANE–EFET</span>
+    <span class="hero-tag">Bloque 4A–4E</span>
+    <span class="hero-tag">Sesión final</span>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-title">Contenido</div>
+    <ul class="toc">
+      <li><a href="#interpretacion">1. Interpretación del resultado</a></li>
+      <ul class="sub">
+        <li><a href="#referentes">Los cuatro referentes</a></li>
+        <li><a href="#brecha">Análisis de brecha</a></li>
+        <li><a href="#variacion">Variación normal vs. cambio real</a></li>
+      </ul>
+      <li><a href="#visualizacion">2. Visualización y dashboards</a></li>
+      <ul class="sub">
+        <li><a href="#grafico">Qué gráfico usar</a></li>
+        <li><a href="#tarjeta">Anatomía de una tarjeta</a></li>
+        <li><a href="#principios">Principios de dashboard</a></li>
+        <li><a href="#semaforo">El semáforo de gestión</a></li>
+        <li><a href="#errores">7 errores frecuentes</a></li>
+      </ul>
+      <li><a href="#ejercicio">3. Ejercicio IDECA</a></li>
+      <ul class="sub">
+        <li><a href="#ejercicio">Contexto: la ICE</a></li>
+        <li><a href="#ejercicio">Indicador GOB04-11</a></li>
+        <li><a href="#ejercicio">Ejercicios de participantes</a></li>
+      </ul>
+      <li><a href="#comunicacion">4. Comunicación ejecutiva</a></li>
+      <ul class="sub">
+        <li><a href="#formula">La fórmula de comunicación</a></li>
+      </ul>
+      <li><a href="#biblio">Bibliografía</a></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+
+    <!-- ── 1. INTERPRETACIÓN ─────────────────────────────────────── -->
+    <h2 id="interpretacion">1. Interpretación del resultado</h2>
+
+    <p>Un indicador produce un número. Pero ese número no habla solo: su significado depende enteramente de con qué se compare. Presentar un resultado sin contexto es como decir que afuera hay 18 grados sin saber si estamos en enero o en julio, en Bogotá o en el Amazonas. <span class="cita">(DANE, 2009, p. 23)</span></p>
+
+    <p>La interpretación de un indicador siempre es relacional: el valor actual cobra sentido únicamente cuando se contrasta con al menos uno de los cuatro referentes que la metodología DANE-EFET establece para el seguimiento de indicadores de gestión territorial. <span class="cita">(Bonnefoy &amp; Armijo, 2005, pp. 31-33)</span></p>
+
+    <h3 id="referentes">Los cuatro referentes de interpretación <span class="fuente-tag">DANE, 2009 · Bonnefoy &amp; Armijo, 2005</span></h3>
+
+    <div class="referentes">
+      <div class="ref-card">
+        <div class="ref-num">Referente 1</div>
+        <h4>La línea base (t₀)</h4>
+        <div class="ref-pregunta">¿Mejoramos desde el inicio?</div>
+        <p>Valor del indicador al comienzo del período de evaluación, antes de cualquier intervención. Es el punto de partida con el que se mide el progreso real.</p>
+        <p><strong>Ejemplo:</strong> el % de mutaciones catastrales atendidas dentro del plazo legal era 62 % en diciembre de 2024 (línea base). Si hoy es 71 %, mejoramos 9 puntos porcentuales respecto a ese punto de partida.</p>
+        <div class="ref-trampa"><strong>Trampa frecuente:</strong> comparar con una línea base medida con metodología diferente. Si en 2024 se incluían las mutaciones de oficio y hoy no, los 9 pp no son reales.</div>
+      </div>
+
+      <div class="ref-card red">
+        <div class="ref-num">Referente 2</div>
+        <h4>La meta comprometida (t₁)</h4>
+        <div class="ref-pregunta">¿Estamos en camino?</div>
+        <p>Valor objetivo al cierre del período, comprometido en el plan de acción. La comparación con la meta revela la brecha que queda por cerrar.</p>
+        <p><strong>Ejemplo:</strong> la meta es 80 % a diciembre de 2026. Con 71 % a mitad de período, la brecha es de 9 pp. ¿Es alcanzable? Depende del ritmo de avance trimestral.</p>
+        <div class="ref-trampa"><strong>Trampa frecuente:</strong> analizar el incumplimiento solo al final del período. El análisis de brecha a mitad del período es la herramienta de alerta temprana.</div>
+      </div>
+
+      <div class="ref-card yel">
+        <div class="ref-num">Referente 3</div>
+        <h4>El período anterior</h4>
+        <div class="ref-pregunta">¿La tendencia es favorable?</div>
+        <p>Valor del mismo indicador en el período inmediatamente anterior. Permite ver si el fenómeno mejora, se estanca o retrocede, independientemente de la meta.</p>
+        <p><strong>Ejemplo:</strong> el trimestre pasado era 68 %, este trimestre es 71 %. Variación de +3 pp. Favorable si el sentido del indicador es aumentar.</p>
+        <div class="ref-trampa"><strong>Trampa frecuente:</strong> atribuir variaciones pequeñas a la gestión cuando pueden ser ruido estadístico normal. Variaciones menores al 2–3 % en períodos cortos merecen cautela antes de celebrarse o alarmarse.</div>
+      </div>
+
+      <div class="ref-card green">
+        <div class="ref-num">Referente 4</div>
+        <h4>Otra entidad o territorio</h4>
+        <div class="ref-pregunta">¿Estamos bien vs. nuestros pares?</div>
+        <p>Valor del mismo indicador (con idéntica definición y metodología) en otra entidad o localidad de características comparables.</p>
+        <p><strong>Ejemplo:</strong> Bogotá atiende el 71 % de las mutaciones catastrales dentro del plazo legal; Medellín, con un catastro de escala similar, atiende el 84 %. Brecha: 13 pp.</p>
+        <div class="ref-trampa"><strong>Trampa frecuente:</strong> comparar sin verificar que los denominadores son idénticos. Si Medellín excluye un tipo de trámite que Bogotá incluye, la comparación no es válida.</div>
+      </div>
+    </div>
+
+    <h3 id="brecha">Análisis de brecha <span class="fuente-tag">DNP-SINERGIA, 2013</span></h3>
+
+    <p>La brecha es la distancia entre el valor actual del indicador y la meta comprometida. No basta con saber si la brecha existe: hay que estimar si el ritmo de avance actual es suficiente para cerrarla antes de la fecha límite. <span class="cita">(DNP-SINERGIA, 2013, p. 38)</span></p>
+
+    <p>La pregunta práctica es: <em>si el indicador sigue mejorando al mismo ritmo que hasta ahora, ¿llegará a la meta?</em></p>
+
+    <div class="ses-note">
+      <strong>Fórmula del ritmo necesario:</strong> Ritmo requerido = (Meta − Valor actual) ÷ Períodos restantes. Si el ritmo histórico es menor que el ritmo requerido, el incumplimiento es predecible y la acción correctiva debe activarse ahora, no al cierre.
+    </div>
+
+    <p><strong>Ejemplo aplicado:</strong> meta 80 %, valor actual 71 %, 6 meses restantes. La brecha es de 9 pp. Si históricamente el indicador mejora 3 pp por semestre, en 6 meses solo subiría a 74 %, no a 80 %. El incumplimiento es predecible desde hoy.</p>
+
+    <h3 id="variacion">Variación normal vs. cambio real <span class="fuente-tag">DANE, 2009 · sec. 4.2</span></h3>
+
+    <p>No toda variación en el valor de un indicador refleja un cambio real en el fenómeno. Los indicadores basados en registros administrativos tienen fuentes de variación que no tienen nada que ver con la gestión: <span class="cita">(DANE, 2009, pp. 27-29)</span></p>
+
+    <ul>
+      <li><strong>Estacionalidad:</strong> algunos trámites catastrales caen en diciembre y suben en marzo. Una comparación secuencial entre S2 y S1 del año siguiente puede parecer una caída cuando es un patrón estacional normal. La comparación interanual (S1 del año A vs. S1 del año B) es más confiable.</li>
+      <li><strong>Cambios en la fuente:</strong> actualizaciones del sistema de información, migraciones de bases de datos o redefinición de campos pueden producir variaciones artificiales.</li>
+      <li><strong>Variación aleatoria:</strong> en períodos cortos con volúmenes pequeños, las fluctuaciones porcentuales pueden ser grandes aunque el proceso no haya cambiado.</li>
+    </ul>
+
+    <div class="alerta">
+      <strong>Regla práctica:</strong> antes de atribuir una variación a la gestión, pregúntese: ¿cambió algo en la fuente de datos? ¿Este período es comparable con el anterior en términos de estacionalidad? ¿El volumen de casos es suficiente para que el porcentaje sea estable?
+    </div>
+
+    <!-- ── 2. VISUALIZACIÓN ────────────────────────────────────────── -->
+    <h2 id="visualizacion">2. Visualización y dashboards</h2>
+
+    <p>Un resultado bien calculado pero mal visualizado puede llevar a decisiones equivocadas. La visualización no es decoración: es parte del análisis. El tipo de gráfico debe elegirse en función del tipo de indicador y de la pregunta que se quiere responder, no de la preferencia estética. <span class="cita">(Few, 2013, pp. 17-21; Cairo, 2016, cap. 2)</span></p>
+
+    <h3 id="grafico">Qué gráfico va con qué indicador <span class="fuente-tag">Few, 2013 · Schwabish, 2021</span></h3>
+
+    <table class="grafico-table">
+      <thead>
+        <tr>
+          <th>Tipo de indicador</th>
+          <th>Pregunta que responde</th>
+          <th>Gráfico recomendado</th>
+          <th>Evitar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Stock</strong> (valor en un punto)</td>
+          <td>¿Cómo estamos hoy?</td>
+          <td>Tarjeta con comparador vs. meta · Gauge simple</td>
+          <td>Línea de un solo punto</td>
+        </tr>
+        <tr>
+          <td><strong>Flujo</strong> (cambio en un período)</td>
+          <td>¿Cuánto avanzamos este período?</td>
+          <td>Barra vertical · Barras agrupadas para comparar períodos</td>
+          <td>Pie chart</td>
+        </tr>
+        <tr>
+          <td><strong>Tendencia</strong> (varios períodos)</td>
+          <td>¿Hacia dónde vamos?</td>
+          <td>Línea temporal · Área bajo la curva</td>
+          <td>Barras cuando hay más de 6 períodos</td>
+        </tr>
+        <tr>
+          <td><strong>Comparación entre entidades</strong></td>
+          <td>¿Cómo estamos vs. otros?</td>
+          <td>Barras horizontales ordenadas de mayor a menor</td>
+          <td>Radar / spider chart</td>
+        </tr>
+        <tr>
+          <td><strong>Distribución</strong></td>
+          <td>¿Cómo se reparte el fenómeno?</td>
+          <td>Histograma · Box plot</td>
+          <td>Línea</td>
+        </tr>
+        <tr>
+          <td><strong>Territorial</strong> (por localidad / UPZ)</td>
+          <td>¿Dónde está el problema?</td>
+          <td>Mapa coroplético (intensidad de color por valor)</td>
+          <td>Tabla de números sin contexto espacial</td>
+        </tr>
+        <tr>
+          <td><strong>Composición</strong> (partes del total)</td>
+          <td>¿Qué fracción corresponde a cada categoría?</td>
+          <td>Barra 100 % apilada · Pie solo con 2–3 categorías</td>
+          <td>Pie con más de 4 categorías</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ses-note">
+      <strong>Regla general:</strong> si el indicador tiene dimensión temporal (varios períodos), el gráfico de línea es casi siempre la primera opción. Si tiene dimensión territorial (varios lugares), el mapa coroplético es insustituible para comunicar dónde está el problema.
+    </div>
+
+    <h3 id="tarjeta">Anatomía de una tarjeta de indicador</h3>
+
+    <p>La tarjeta es la unidad básica de un dashboard. Una tarjeta bien diseñada comunica el resultado principal, su contexto y la señal de gestión en un solo vistazo, sin necesidad de leer texto adicional.</p>
+
+    <p>A continuación, un ejemplo de tarjeta correctamente construida para el indicador de mutaciones catastrales del curso:</p>
+
+    <div class="ind-card">
+      <div class="ind-card-label">% Mutaciones catastrales atendidas en plazo · Bogotá D.C.</div>
+      <div class="ind-card-value">71<span> %</span></div>
+      <div class="ind-card-row">
+        <span class="ind-card-meta">Meta: 80 %</span>
+        <span class="ind-card-delta">▲ +3 pp vs. trim. anterior</span>
+      </div>
+      <div class="ind-bar"><div class="ind-bar-fill" style="width:71%"></div></div>
+      <div class="ind-card-row">
+        <span class="ind-semaforo semaforo-yel">Amarillo — en riesgo</span>
+        <span class="ind-card-meta">Brecha: 9 pp</span>
+      </div>
+      <div class="ind-card-footer">II Trimestre 2026 · Fuente: UAECD · Actualización: julio 2026</div>
+    </div>
+
+    <p>Los seis elementos de una tarjeta, por orden de jerarquía visual:</p>
+
+    <ol>
+      <li><strong>Nombre:</strong> preciso y sin jerga. El lector no debe adivinar qué mide.</li>
+      <li><strong>Valor principal:</strong> el número que importa. Grande, legible, con unidad de medida.</li>
+      <li><strong>Comparador:</strong> meta, línea base o período anterior. Al menos uno, siempre visible junto al valor.</li>
+      <li><strong>Variación:</strong> cambio respecto al período anterior con flecha de dirección (+/−).</li>
+      <li><strong>Semáforo:</strong> señal de gestión. Solo si los umbrales están definidos en la ficha técnica.</li>
+      <li><strong>Contexto:</strong> territorio, período y fuente. Sin estos tres, el número no es verificable.</li>
+    </ol>
+
+    <h3 id="principios">Los 5 principios de diseño de un dashboard <span class="fuente-tag">Few, 2013 · Tufte, 2001</span></h3>
+
+    <div class="principios">
+      <div class="principio">
+        <div class="principio-num">1</div>
+        <div>
+          <h4>Jerarquía visual</h4>
+          <p>Lo más importante ocupa más espacio y mayor contraste. El directivo debe identificar los 2–3 indicadores críticos en 5 segundos sin leer texto. Los indicadores en rojo van primero y al centro.</p>
+        </div>
+      </div>
+      <div class="principio">
+        <div class="principio-num">2</div>
+        <div>
+          <h4>Máximo 7 indicadores por pantalla</h4>
+          <p>Un dashboard con 20 indicadores no es un dashboard: es una tabla disfrazada. Si todos los indicadores son igualmente visibles, ninguno lo es. Agrupar por proceso y usar páginas separadas.</p>
+        </div>
+      </div>
+      <div class="principio">
+        <div class="principio-num">3</div>
+        <div>
+          <h4>Contexto siempre visible</h4>
+          <p>Cada indicador debe mostrar período de reporte, fuente del dato y fecha de última actualización. Un resultado sin fecha puede estar desactualizado sin que el lector lo sepa.</p>
+        </div>
+      </div>
+      <div class="principio">
+        <div class="principio-num">4</div>
+        <div>
+          <h4>Consistencia</h4>
+          <p>El mismo color siempre significa lo mismo en todo el dashboard. Si el rojo es alerta, no usar rojo para títulos decorativos. Si el verde es cumplimiento, no usar verde para resaltar cualquier número positivo.</p>
+        </div>
+      </div>
+      <div class="principio">
+        <div class="principio-num">5</div>
+        <div>
+          <h4>Un mensaje por pantalla</h4>
+          <p>El dashboard señala dónde mirar; no explica por qué. La explicación va en el informe de gestión o en la reunión de seguimiento. El dashboard responde: ¿qué necesita atención hoy?</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 id="semaforo">El semáforo de gestión <span class="fuente-tag">DANE, 2009 · DNP-SINERGIA, 2013</span></h3>
+
+    <p>El semáforo traduce el valor numérico en una señal de acción. Para que sea útil y consistente, los rangos de color deben derivar directamente de la ficha técnica: línea base, meta y umbral de alerta. <span class="cita">(DANE, 2009, p. 30; Bonnefoy &amp; Armijo, 2005, pp. 35-37)</span></p>
+
+    <div class="semaforo-table">
+      <div class="sem-row">
+        <div class="sem-color verde"></div>
+        <div class="sem-body">
+          <div class="sem-titulo verde">Verde — Cumplimiento</div>
+          <div class="sem-desc">El valor actual es igual o mayor a la meta comprometida.</div>
+          <div class="sem-accion">Acción: mantener y documentar las prácticas que explican el buen resultado.</div>
+        </div>
+      </div>
+      <div class="sem-row">
+        <div class="sem-color amarillo"></div>
+        <div class="sem-body">
+          <div class="sem-titulo amarillo">Amarillo — En riesgo</div>
+          <div class="sem-desc">El valor está entre el umbral de alerta y la meta. No hay incumplimiento aún, pero el ritmo de avance podría no ser suficiente para llegar a la meta.</div>
+          <div class="sem-accion">Acción: revisar el plan de acción y ajustar la estrategia de implementación.</div>
+        </div>
+      </div>
+      <div class="sem-row">
+        <div class="sem-color rojo"></div>
+        <div class="sem-body">
+          <div class="sem-titulo rojo">Rojo — Alerta</div>
+          <div class="sem-desc">El valor está por debajo del umbral de alerta definido en la ficha técnica. El incumplimiento de la meta es inminente sin acción correctiva.</div>
+          <div class="sem-accion">Acción: activar el protocolo correctivo inmediato; escalar a la dirección si corresponde.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ses-note">
+      <strong>Ejemplo con el indicador del curso:</strong> Meta 80 % · Umbral de alerta 55 % · Resultado actual 71 %.<br>
+      Verde si ≥ 80 % · Amarillo si entre 55 % y 79 % · Rojo si &lt; 55 %<br>
+      El resultado de 71 % activa el semáforo en <strong>amarillo</strong>: en riesgo, con brecha de 9 pp a 6 meses del cierre.
+    </div>
+
+    <div class="alerta">
+      <strong>Por qué el semáforo sin umbrales definidos no sirve:</strong> si el umbral no está en la ficha técnica, el color lo decide el analista caso por caso, produciendo inconsistencias entre períodos. El semáforo debe ser automático: dado el valor, el color se determina solo con las reglas de la ficha.
+    </div>
+
+    <h3 id="errores">Los 7 errores más frecuentes de visualización en gestión pública <span class="fuente-tag">Tufte, 2001 · Few, 2013 · Cairo, 2016</span></h3>
+
+    <div class="errores">
+      <div class="error-item">
+        <div class="error-n">1</div>
+        <div>
+          <h4>Eje Y que no empieza en cero</h4>
+          <p>Una variación de 62 % a 71 % se ve como un salto enorme si el eje Y va de 60 % a 75 %. El lector sobreestima la mejora o el retroceso.</p>
+          <div class="error-regla">Regla: el eje Y empieza en 0 salvo que se explique explícitamente por qué no y el contexto lo justifique.</div>
+        </div>
+      </div>
+      <div class="error-item">
+        <div class="error-n">2</div>
+        <div>
+          <h4>Pie chart con más de 3 categorías</h4>
+          <p>Con 5 o más categorías, el ojo humano no puede distinguir ángulos similares. La lectura se vuelve imposible sin etiquetas que repiten el dato en texto.</p>
+          <div class="error-regla">Regla: si hay más de 3 categorías, reemplazar por barra horizontal ordenada de mayor a menor.</div>
+        </div>
+      </div>
+      <div class="error-item">
+        <div class="error-n">3</div>
+        <div>
+          <h4>Gráficos 3D</h4>
+          <p>La perspectiva tridimensional distorsiona el tamaño relativo de las barras o sectores. El lector no puede comparar valores con precisión.</p>
+          <div class="error-regla">Regla: nunca usar efectos 3D en indicadores de gestión. La precisión visual es parte de la rendición de cuentas.</div>
+        </div>
+      </div>
+      <div class="error-item">
+        <div class="error-n">4</div>
+        <div>
+          <h4>Semáforo sin umbrales definidos</h4>
+          <p>Si los rangos de color no están en la ficha técnica, el color cambia según quien elabora el informe. Eso hace al semáforo inconsistente e indefendible ante auditorías.</p>
+          <div class="error-regla">Regla: el semáforo solo debe usarse si los umbrales (verde / amarillo / rojo) están documentados en la ficha técnica.</div>
+        </div>
+      </div>
+      <div class="error-item">
+        <div class="error-n">5</div>
+        <div>
+          <h4>Gráfico sin fuente, sin período y sin unidad</h4>
+          <p>El lector no puede verificar el dato ni saber si está desactualizado. En informes de gestión pública, la trazabilidad del dato es un requisito de transparencia.</p>
+          <div class="error-regla">Regla: todo gráfico de gestión pública debe tener pie de página con fuente, período de reporte y fecha de actualización.</div>
+        </div>
+      </div>
+      <div class="error-item">
+        <div class="error-n">6</div>
+        <div>
+          <h4>Cambiar el denominador entre períodos sin avisar</h4>
+          <p>Si en el primer semestre el denominador incluye todas las solicitudes y en el segundo solo las urgentes, los valores no son comparables. El gráfico mostrará un cambio que no existió.</p>
+          <div class="error-regla">Regla: cualquier cambio metodológico en el denominador debe documentarse en la ficha técnica y señalarse explícitamente en el gráfico con una nota.</div>
+        </div>
+      </div>
+      <div class="error-item">
+        <div class="error-n">7</div>
+        <div>
+          <h4>Demasiada información en una sola pantalla</h4>
+          <p>Barras, líneas, tablas, semáforos y texto explicativo en la misma diapositiva. El ojo no sabe dónde mirar y el mensaje central se pierde.</p>
+          <div class="error-regla">Regla: un mensaje por pantalla. Un indicador principal por tarjeta. Si hay más información, usar páginas o pestañas separadas.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 3. EJERCICIO IDECA ─────────────────────────────────────── -->
+    <h2 id="ejercicio">3. Ejercicio IDECA — Revisión de un indicador real de la ICE</h2>
+
+    <h3>Contexto: ¿qué es la ICE?</h3>
+
+    <p>La <strong>Infraestructura de Conocimiento Espacial (ICE)</strong> es el sistema de indicadores con el que IDECA mide si los datos geoespaciales del Distrito no solo existen y están disponibles, sino si están generando valor público real: decisiones mejores, territorio más planificado, ciudadanía con acceso a información. Es la evolución de la Infraestructura de Datos Espaciales (IDE): la IDE garantiza que los datos estén; la ICE pregunta si se están usando para algo. <span class="cita">(IDECA, 2025, Metodología ICE)</span></p>
+
+    <p>El sistema ICE organiza 54 indicadores en 8 componentes definidos por el Decreto Distrital 575 de 2023: gobernanza, generación de capacidades, datos, interoperabilidad, aprovechamiento de datos, seguridad y privacidad, insumos técnicos y tecnológicos, y uso y apropiación. Cada indicador fue formulado siguiendo exactamente la estructura de nombres que el DANE establece y que este curso ha enseñado: <em>[tipo de medición] de [fenómeno] en/de [ámbito] (unidad, periodicidad)</em>. <span class="cita">(IDECA, 2025; Decreto Distrital 575/2023; DANE, 2009)</span></p>
+
+    <div class="ses-note">
+      <strong>Conexión con el curso:</strong> el proceso de reformulación de los 54 indicadores ICE aplicó exactamente los criterios de las sesiones 1, 2 y 3 de este curso: verificar que el nombre refleje la fórmula, que numerador y denominador sean coherentes, que el tipo de medición sea correcto, y que la definición operacional responda a quién, cuándo, qué cuenta y qué excluye.
+    </div>
+
+    <h3>El indicador del ejercicio <span class="fuente-tag">ICE — GOB04-11 · IDECA, 2025</span></h3>
+
+    <p>El indicador <strong>GOB04-11</strong> pertenece al componente de Gobernanza, categoría Comunicaciones. Mide qué tan bien responde IDECA a las solicitudes de recursos geográficos que reciben de entidades y ciudadanos: ¿se resuelven a tiempo y con calidad?</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Contenido</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Código</strong></td>
+          <td>GOB04-11</td>
+        </tr>
+        <tr>
+          <td><strong>Nombre (convención DANE)</strong></td>
+          <td>Porcentaje de requerimientos de recursos geográficos atendidos con oportunidad y calidad (porcentaje, semestral)</td>
+        </tr>
+        <tr>
+          <td><strong>Definición operacional</strong></td>
+          <td>Número de solicitudes de recursos geográficos recibidas por IDECA a través de sus canales oficiales que fueron resueltas dentro del plazo definido en el protocolo de servicio y con los criterios de calidad establecidos, sin reapertura posterior por parte del solicitante.</td>
+        </tr>
+        <tr>
+          <td><strong>Fórmula</strong></td>
+          <td>% = (Requerimientos atendidos con oportunidad y sin reapertura ÷ Requerimientos recibidos) × 100</td>
+        </tr>
+        <tr>
+          <td><strong>Unidad</strong></td>
+          <td>Porcentaje</td>
+        </tr>
+        <tr>
+          <td><strong>Periodicidad</strong></td>
+          <td>Semestral</td>
+        </tr>
+        <tr>
+          <td><strong>Fuente</strong></td>
+          <td>Sistema de gestión de requerimientos de IDECA</td>
+        </tr>
+        <tr>
+          <td><strong>Componente ICE</strong></td>
+          <td>Gobernanza &gt; Comunicaciones</td>
+        </tr>
+        <tr>
+          <td><strong>Sentido favorable</strong></td>
+          <td>Aumentar (mayor porcentaje = mejor atención)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Datos históricos del indicador</h3>
+
+    <p>La siguiente tabla presenta los valores del indicador GOB04-11 para cinco períodos consecutivos, junto con la meta y el umbral de alerta definidos en la ficha técnica:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Período</th>
+          <th>Valor</th>
+          <th>Meta</th>
+          <th>Umbral de alerta</th>
+          <th>Observación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>S1 2023</strong></td>
+          <td>68 %</td>
+          <td>80 %</td>
+          <td>60 %</td>
+          <td>Línea base del indicador</td>
+        </tr>
+        <tr>
+          <td><strong>S2 2023</strong></td>
+          <td>64 %</td>
+          <td>80 %</td>
+          <td>60 %</td>
+          <td>Caída respecto al semestre anterior</td>
+        </tr>
+        <tr>
+          <td><strong>S1 2024</strong></td>
+          <td>73 %</td>
+          <td>80 %</td>
+          <td>60 %</td>
+          <td>Recuperación</td>
+        </tr>
+        <tr>
+          <td><strong>S2 2024</strong></td>
+          <td>77 %</td>
+          <td>80 %</td>
+          <td>60 %</td>
+          <td>Tendencia ascendente sostenida</td>
+        </tr>
+        <tr>
+          <td><strong>S1 2025</strong></td>
+          <td>74 %</td>
+          <td>80 %</td>
+          <td>60 %</td>
+          <td>Período de reporte más reciente</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Preguntas para el análisis grupal</h3>
+
+    <div class="casos">
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge">Pregunta 1</span>
+          <span>Tendencia e interpretación</span>
+        </div>
+        <div class="caso-body">
+          <p>Mirando los cinco períodos: ¿la tendencia general es favorable o desfavorable? ¿Qué explicación plausible tiene la caída del S2 2023? ¿Debería preocupar la baja de S1 2025 respecto al S2 2024?</p>
+        </div>
+      </div>
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge">Pregunta 2</span>
+          <span>Semáforo del último período</span>
+        </div>
+        <div class="caso-body">
+          <p>Con base en la meta (80 %) y el umbral de alerta (60 %): ¿qué color del semáforo corresponde al S1 2025 (74 %)? ¿Qué acción recomienda ese color?</p>
+        </div>
+      </div>
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge">Pregunta 3</span>
+          <span>Tipo de gráfico</span>
+        </div>
+        <div class="caso-body">
+          <p>¿Qué tipo de gráfico es más adecuado para mostrar la evolución de este indicador en los cinco períodos? ¿Cambiaría su respuesta si solo tuviera el dato del último semestre?</p>
+        </div>
+      </div>
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge">Pregunta 4</span>
+          <span>Mensaje ejecutivo</span>
+        </div>
+        <div class="caso-body">
+          <p>Usando la fórmula contexto + dato + comparador + implicación, redacte en máximo dos frases el mensaje del S1 2025 dirigido a la Dirección de IDECA. ¿Qué acción debe activarse?</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="alerta">
+      <strong>Para reflexión adicional:</strong> la caída de S2 2023 a 64 % estuvo cerca del umbral de alerta (60 %). Si el umbral no hubiera estado definido en la ficha técnica, ¿cómo habría calificado ese resultado? ¿Habría activado alguna acción? Esta es exactamente la razón por la que los umbrales deben estar en la ficha técnica antes del primer reporte, no después.
+    </div>
+
+    
+    <h3>Ejercicios de los participantes — revisión en clase</h3>
+
+    <p>Como parte del bloque 4E, tres participantes presentaron los indicadores que formularon durante el curso aplicados a su propio contexto de trabajo. A continuación se resume cada ejercicio con los aspectos centrales analizados en clase.</p>
+
+    <div class="casos">
+
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge">Participante A</span>
+          <span>Subgerencia de Operaciones · UAECD</span>
+        </div>
+        <div class="caso-body">
+          <p><strong>Indicador:</strong> Número de consultas y descargas de capas geográficas de la Secretaría de Educación en Mapas Bogotá (número, trimestral).</p>
+          <p><strong>Clasificación:</strong> Gestión · Razón/cociente · Flujo trimestral · Cadena de valor: Impacto.</p>
+          <p><strong>Decisión que activa:</strong> Si las consultas/descargas son bajas, se revisa qué información geográfica de la SED se publica en Mapas Bogotá.</p>
+          <p><strong>Fortaleza clave:</strong> Mide apropiación real, no solo disponibilidad — una distinción fundamental en la lógica ICE. La periodicidad trimestral es adecuada para monitoreo oportuno sin sobrecargar el proceso.</p>
+        </div>
+      </div>
+
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge">Participante B</span>
+          <span>Gerencia IDECA · UAECD</span>
+        </div>
+        <div class="caso-body">
+          <p><strong>Indicador:</strong> Porcentaje de ediciones del Newsletter de IDECA que cumplen el objetivo de difusión (porcentaje, trimestral).</p>
+          <p><strong>Clasificación:</strong> Gestión · Porcentaje · Flujo mensual (reporte trimestral) · Cuantitativo.</p>
+          <p><strong>Decisión que activa:</strong> Determinar si continúa, se reformula o se cierra la elaboración del Newsletter institucional.</p>
+          <p><strong>Fortaleza clave:</strong> Conecta el indicador directamente con una decisión gerencial real. Identifica con precisión el usuario y el nivel decisional, lo que facilita comunicar el resultado de forma efectiva.</p>
+        </div>
+      </div>
+
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge">Participante C</span>
+          <span>Gerencia IDECA · UAECD</span>
+        </div>
+        <div class="caso-body">
+          <p><strong>Indicador:</strong> Índice de Gestión y Retención del Conocimiento Especializado de IDECA — IGRCE (porcentaje, anual).</p>
+          <p><strong>Fórmula:</strong> IGRCE = (∑ acciones de gestión del conocimiento implementadas ÷ ∑ acciones definidas) × 100.</p>
+          <p><strong>Clasificación:</strong> Estratégico · Porcentaje · Flujo anual · Cadena de valor: Actividades.</p>
+          <p><strong>Decisión que activa:</strong> Prevenir y mitigar la pérdida de conocimiento especializado del equipo IDECA ante rotación de personal.</p>
+          <p><strong>Fortaleza clave:</strong> Aborda un riesgo organizacional crítico y poco medido. Propone una fórmula propia (IGRCE) que operacionaliza un concepto cualitativo en un porcentaje comparable entre períodos.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ses-note">
+      <strong>Reflexión de cierre del bloque:</strong> los tres ejercicios comparten un rasgo: el indicador nació de una pregunta de gestión real, no de un requisito de reporte. Esa es la diferencia entre un indicador que se usa y uno que se archiva.
+    </div>
+
+        <!-- ── 4. COMUNICACIÓN ─────────────────────────────────────────── -->
+    <h2 id="comunicacion">4. Comunicación a audiencias no técnicas</h2>
+
+    <p>Saber calcular e interpretar un indicador es condición necesaria, pero no suficiente. Un resultado que no puede comunicarse a quien toma decisiones no tiene utilidad práctica. La brecha entre el técnico que calcula y el directivo que decide se cierra con un mensaje bien estructurado, no con más datos.</p>
+
+    <h3 id="formula">La fórmula de comunicación <span class="fuente-tag">Schwabish, 2021 · DNP-SINERGIA, 2013</span></h3>
+
+    <p>Un mensaje efectivo para un directivo o para un informe de rendición de cuentas tiene cuatro componentes, siempre en este orden: <span class="cita">(Schwabish, 2021, pp. 45-49; DNP-SINERGIA, 2013, pp. 42-43)</span></p>
+
+    <div class="formula-com">
+      <div class="formula-com-row">
+        <div class="formula-com-label">Contexto</div>
+        <div class="formula-com-val">¿Qué se mide? ¿Dónde? ¿Cuándo? — sin tecnicismos, con nombres propios reconocibles.</div>
+      </div>
+      <div class="formula-com-row">
+        <div class="formula-com-label">Dato</div>
+        <div class="formula-com-val">El valor del indicador con su unidad de medida. Redondo si es posible; sin exceso de decimales.</div>
+      </div>
+      <div class="formula-com-row">
+        <div class="formula-com-label">Comparador</div>
+        <div class="formula-com-val">El referente que da sentido al número: la meta, el período anterior o el estándar externo.</div>
+      </div>
+      <div class="formula-com-row">
+        <div class="formula-com-label">Implicación</div>
+        <div class="formula-com-val">¿Qué significa para la gestión? ¿Qué decisión o acción activa este resultado?</div>
+      </div>
+    </div>
+
+    <div class="casos">
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge" style="background:#DC2626">Versión técnica — difícil de usar</span>
+        </div>
+        <div class="caso-body">
+          <p>"El numerador del indicador de mutaciones catastrales tipo 1 con atención dentro del plazo legal registró 71 unidades de 100 en el II trimestre del período fiscal 2026, con un delta de +3 pp sobre el trimestre inmediatamente anterior."</p>
+        </div>
+      </div>
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge" style="background:#CA8A04">Versión ambigua — incompleta</span>
+        </div>
+        <div class="caso-body">
+          <p>"Los trámites catastrales mejoraron en el segundo trimestre, subiendo al 71 %."</p>
+        </div>
+      </div>
+      <div class="caso">
+        <div class="caso-header">
+          <span class="caso-badge" style="background:#16A34A">Versión efectiva — 64 palabras</span>
+        </div>
+        <div class="caso-body">
+          <p>"En el segundo trimestre de 2026, el 71 % de las mutaciones catastrales en Bogotá fueron atendidas dentro del plazo legal, 3 puntos más que el trimestre anterior. Sin embargo, la meta de cierre de año es 80 %, y la brecha actual de 9 puntos indica que, de mantenerse el ritmo de mejora, no se cumplirá. Se requiere revisar el plan del tercer trimestre."</p>
+          <div class="caso-respuesta"><strong>Por qué funciona:</strong> tiene contexto (qué, dónde, cuándo), dato con unidad (71 %), comparador (meta 80 %, período anterior) e implicación concreta (qué hacer). No menciona numeradores ni denominadores.</div>
+        </div>
+      </div>
+    </div>
+
+    <blockquote>
+      <p>La versión efectiva tiene 64 palabras. Es suficiente para una diapositiva ejecutiva, un correo de seguimiento o el resumen de un informe de gestión. Un buen mensaje de gestión no necesita más espacio: necesita más precisión.</p>
+    </blockquote>
+
+    <!-- ── BIBLIOGRAFÍA ───────────────────────────────────────────── -->
+    <h2 id="biblio">Bibliografía</h2>
+
+    <ul>
+      <li>IDECA — Infraestructura de Datos Espaciales para el Distrito Capital. (2025). <em>Metodología de cálculo y análisis de resultados del Sistema de Indicadores para la Infraestructura del Conocimiento Espacial — ICE.</em> Bogotá D.C.: IDECA.</li>
+      <li>Alcaldía Mayor de Bogotá. (2023). <em>Decreto Distrital 575 de 2023 — Componentes e infraestructura de datos del Distrito Capital.</em> <a href="https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=151657" target="_blank">→ Norma</a></li>
+      <li>DANE. (2009). <em>Guía para diseño, construcción e interpretación de indicadores.</em> DANE-DIRPEN. Capítulo 4: Interpretación y uso de los indicadores. <a href="https://www.dane.gov.co/files/planificacion/fortalecimiento/cuadernillo/Guia_construccion_interpretacion_indicadores.pdf" target="_blank">→ PDF</a></li>
+      <li>Bonnefoy, J. C., &amp; Armijo, M. (2005). <em>Indicadores de desempeño en el sector público.</em> CEPAL/ILPES. Serie Manuales N.° 45. Capítulo 3. <a href="https://repositorio.cepal.org/handle/11362/5611" target="_blank">→ PDF</a></li>
+      <li>DNP — Departamento Nacional de Planeación. (2013). <em>Guía metodológica para el seguimiento y la evaluación a políticas públicas.</em> DNP-SINERGIA. <a href="https://colaboracion.dnp.gov.co/CDT/Sinergia/Documentos/Cartilla%20Guia%20para%20Seguimiento%20y%20Evaluaci%C3%B3n%20Ago%2013.pdf" target="_blank">→ PDF</a></li>
+      <li>Few, S. (2013). <em>Show Me the Numbers: Designing Tables and Graphs to Enlighten.</em> 2.ª ed. Analytics Press.</li>
+      <li>Cairo, A. (2016). <em>The Truthful Art: Data, Charts, and Maps for Communication.</em> New Riders.</li>
+      <li>Schwabish, J. (2021). <em>Better Data Visualizations: A Guide for Scholars, Researchers, and Wonks.</em> Columbia University Press.</li>
+      <li>Tufte, E. R. (2001). <em>The Visual Display of Quantitative Information.</em> 2.ª ed. Graphics Press.</li>
+    </ul>
+
+  </main>
+</div>
+
+<script>
+// TOC active state on scroll
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.toc a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.toc a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
